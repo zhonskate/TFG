@@ -723,13 +723,52 @@ Por último, habrá que conectar el servidor de \textit{notebooks} y la base de 
 
 Para poner en marcha el sistema, se ejecutarán el servidor de la base de datos y el servidor de \textit{notebooks}. El directorio que aparecerá como \textit{root} en el servidor de notebooks es aquel en el que se ejecuta la aplicación. Es necesario tener esto en cuenta, ya que si cae el servidor y se inicia desde otro punto los usuarios pueden confundirse o no saber llegar a sus archivos. \textit{Auth0} está siempre escuchando, por lo que no es necesario hacer nada explícitamente en cuanto a esta herramienta. 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               PRUEBAS 		                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \chapter{Pruebas}
 \label{ch:pruebas}
 
+
+% VALIDACIÓN DEL SISTEMA
+
+\section{Validación del sistema}
+\label{sec:validacion-sistema}
+
+A la hora de realizar las comprobaciones sobre el funcionamiento del sistema se ha seguido una metodología empírica. Tal y como comentamos en el capítulo \ref{ch:desarrollo-solucion}, el desarrollo de la solución se ha ido realizando por componentes o módulos dentro del sistema. Dentro de cada etapa del desarrollo de la aplicación, es decir, dentro de la impementación de cada módulo, se ha ido probando el funcionamiento del módulo en cuestión.
+
+Para las comprobaciones relativas a cada componente se plantean casos de prueba que cubran el mayor conjunto de casos reales posibles. Se realizan todos los \textit{tests} propuestos sobre el componente y se valora, según los resultados obtenidos, si el componente cumple con su funcionalidad de manera correcta. En el caso de no hacerlo, se revisa la implementación para detectar los errores y corregirlos.
+
+Las pruebas han sido acumulativas a lo largo del desarrollo del proyecto, por lo que, al probar un módulo y comprobar que éste funciona correctamente, hay que ver que ninguno de los implementados anteriormente haya dejado de funcionar. En el caso de que alguno dejara de funcionar habría que resolver los conflictos entre los dos componentes.
+
+Una vez completa la implementación del proyecto se han realizado pruebas a nivel global para asegurarnos de que el sistema cumple con todos los objetivos correctamente. Estas pruebas se han llevado a cabo como casos de uso, simulando las interacciones que se podrían realizar en la plataforma en un entorno real.
+
+
+% PRUEBAS DE CARGA
+
+\section{Pruebas de carga}
+\label{sec:pruebas de carga}
+
+Se ha realizado un estudio de la velocidad de refresco de los documentos en base a su tamaño. El intervalo de refresco predeterminado de los \textit{notebooks} es de dos segundos, como se explica en la sección \ref{sec:desarrollo-sincro}. Este intervalo es la frecuencia con que los \textit{notebooks} se guardan, en el caso del usuario con permisos de edición, y se cargan, en el resto de casos. Esta frecuencia se reflejará de una forma fiel siempre que se pueda realizar la computación en un tiempo menor o igual al programado. Si se tarda más en guardar o cargar el notebook nunca se podrá cumplir este tiempo especificado.
+
+Para comprobar en que punto se sobrecarga el sistema, se ha utilizado un \textit{notebook} compartido. Todas las casillas de este documento tenían tan solo una línea de código escrita. Por tanto, como las medidas se realizan por casillas, este sería el tiempo mínimo a obtener, ya que más líneas implicarían más información y más tiempo de refresco. 
+
+Las pruebas se han realizado en un equipo con un procesador \textit{Intel Core i7-4790} y 16 \textit{GB} de memoria \textit{RAM}. El sistema operativo ha sido \textit{Ubuntu} en su versión 16.04 y el navegador \textit{Mozilla Firefox} en su versión 60.0.2.
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=0.8\textwidth]{loadplot.png}
+  	\caption{Gráfico de relación del número de celdas y tiempo de cargado de un \textit{notebook}}
+  	\label{fig:loadplot}
+\end{figure}
+
+En la figura \ref{fig:loadplot} podemos ver los resultados obtenidos en esta prueba de carga. En el eje X se muestra el numero de celdas del notebook y en el Y los segundos que ha tardado en verse reflejado el cambio. Se han realizado tres mediciones para cada notebook, reflejadas con las cruces azules, y se ha obtenido la media, que se muestra con la línea roja.
+
+Se puede apreciar que mientras el notebook tiene menos de cien celdas se mantiene un intervalo de carga razonable, muy cercano a los dos segundos programados. En cuanto se supera este valor, el tiempo de refresco crece exponencialmente, tardando al rededor de diez segundos con doscientas celdas, treinta con quinientas celdas y hasta ciento diez con mil celdas. Podemos determinar que es este punto en el que el sistema se satura, haciendo que trabajar con \textit{notebooks} de estas dimensiones no resulte una experiencia tan fluida.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                              CONCLUSIONES                                   %
@@ -929,6 +968,8 @@ En primer lugar se tiene que realizar una ejecución del \textit{notebook master
 Después, el administrador compartirá una casilla, nombrando a un usuario editor. Cuando este usuario quiera realizar una ejecución de la casilla, se mandará el código a el \textit{connection bridge}, y éste aádirá el método de cargado \textit{dill} de la casilla anterior a la que se va a mandar a ejecutar. De esta manera, el \textit{kernel} cargará el contexto correspondiente y la casilla se ejecutará de forma consistente. El editopr puede hacer pruebas, porque el contexto siempre va a ser el de la casilla anterior en sus ejecuciones.
 
 Por último, cuando un editor termine con las modificaciones en su casilla, el administrador del notebook tiene que decidir si mantiene los cambios o los descarta. En el caso de descartar los cambios propuestos, no se tiene que realizar ninguna ejecución, porque los contextos se mantienen. Sin embargo, en el caso de aceptar estas modificaciones, se tienen que recalcular los contextos de las casillas posteriores, porque dependen de éste. En el momento en el que se acepten los cambios, se ejecutará desde la casilla cambiada hasta el final del documento.  En la primera casilla que se ejecute, el \textit{connection bridge} insertará el método \textit{dill} de carga al principio y el de guardado al final, para ejecutar las casillas en base al contexto correcto. El resto de casillas se ejecutarán con el método \textit{dill} de guardado al final. Para finalizar, se actualizarán los notebooks de los editores con un mensaje, avisando de que la versión \textit{master} ha cambiado, para que lo tengan en cuenta.
+
+Este sistema funciona con un solo \textit{kernel}, por lo que el consumo de recursos es bajo. Sin embargo, en el caso de haber muchos editores y querer ejecutar sus casillas a la vez, algunos usuarios puede que tengan que esperar. Esto se debe a que el \textit{kernel} solo puede ejecutar una casilla a la vez, por lo que el \textit{connection bridge} tiene que implementar una cola, mandando una celda a ejecutar cuando el \textit{kernel} le haya devuelto un resultado y esté disponible. Por otro lado, se podría plantear un modelo con un \textit{kernel} por editor, cargando su contexto al principio. De esta manera el \textit{connection bridge} serviría para dirigir cada celda a su kernel asociado. Se debe valorar si interesa un sistema con poco tiempo de espera y poco consumo de recursos o si se prefiere un tiempo de respuesta menor con un coste computacional más elevado. De esto dependerá la topología elegida para el sistema mejorado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                GLOSARIO                                     %
