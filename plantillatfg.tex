@@ -195,7 +195,7 @@ El trabajo realizado ha consistido en la creación de un entorno colaborativo pe
 \chapter{Introducci\'on}
 \label{ch:intro}
 
-La computación interactiva permite llevar a cabo tareas de programación de manera intuitiva e inmeditata. Al ofrecer un entorno responsivo, el usuario puede realizar cambios y ver su resultado al instante, haciendo que el flujo de interacción entre él y la herramienta sea muy ágil.
+Los entornos de computación interactiva permiten llevar a cabo tareas de programación de manera intuitiva e inmeditata. Al ofrecer un entorno responsivo, el usuario puede realizar cambios y ver su resultado al instante, haciendo que el flujo de interacción entre él y la herramienta sea muy ágil.
 
 Existe un gran tradición en el ámbito de la computación interactiva, siendo los primeros ejemplos terminales o \textit{shells}. Éstos suelen ofrecer una interfaz mediante línea de comandos. Para encontrar herramientas que soporten entornos gráficos hay que avanzar hasta el uso de \textit{\gls{notebook}s}, documentos donde los bloques de código y los resultados de sus computaciones conviven en un una serie de celdas.
 
@@ -232,11 +232,17 @@ A nivel personal, pienso que tomar como base para mi Trabajo de Fin de Grado un 
 El objetivo principal del proyecto es el desarrollo de un entorno colaborativo para \textit{Jupyter}. Entendemos desarrollo como todo el proceso creativo, desde la concepción de la idea y el diseño formal hasta la implementación final del código.
 
 En cuanto a objetivos más acotados y específicos, tenemos los siguientes, cada uno con su correspondientes apartados de diseño e implementación:
+
 \begin{itemize}
+
 \item Permitir que los usuarios modifiquen y vean los cambios en los documentos en tiempo real.
+
 \item Gestionar los usuarios, sus permisos y sus sesiones.
+
 \item Gestionar los \textit{notebooks} y el acceso de los usuarios a estos \textit{notebooks}.
+
 \item Soporte de colaboración en distintas sesiones de trabajo.
+
 \end{itemize}
 
 Estos objetivos específicos se pueden entender como pequeños apartados que, una vez unidos y cohesionados, supondrán el cumplimiento del objetivo principal.
@@ -943,7 +949,7 @@ Se ha elegido el intervalo de un segundo porque, aunque no sea práctica habitua
 \chapter{Conclusiones}
 \label{ch:conclusiones}
 
-Para concluir la memoria, se van a recuperar los objetivos planteados en la sección \ref{sec:objetivos} de la introducción. Se analizará hasta qué punto se han cumplido esos objetivos, así como en qué aspectos se podrían mejorar. Las mejoras serán comentadas de forma breve, pues en el capítulo \ref{ch:futuro} se verán los trabajos futuros que se pueden aplicar a este proyecto. Se tratarán también los conocimientos aprendidos, así como la familiarización con nuevas tecnologías o herramientas empleadas en el desarrollo del proyecto. Por último, se finalizará el capítulo hablando de la relación del desarrollo del trabajo con los estudios cursados.
+Para concluir la memoria, se van a recuperar los objetivos planteados en la sección \ref{sec:objetivos} de la introducción. Se analizará hasta qué punto se han cumplido esos objetivos, así como qué aspectos se podrían mejorar. Las mejoras serán comentadas de forma breve, pues en el capítulo \ref{ch:futuro} se verán los trabajos futuros que se pueden aplicar a este proyecto. Se tratarán también los conocimientos aprendidos, así como la familiarización con nuevas tecnologías o herramientas empleadas en el desarrollo del proyecto. Por último, se finalizará el capítulo hablando de la relación del desarrollo del trabajo con los estudios cursados.
 
 
 % CUMPLIMIENTO DE LOS OBJETIVOS
@@ -951,57 +957,76 @@ Para concluir la memoria, se van a recuperar los objetivos planteados en la secc
 \section{Cumplimiento de los objetivos}
 \label{sec:conc-objetivos}
 
-\subsection{Sincronizar los \textit{notebooks} en tiempo real.}
+En la formalización del problema, sección \ref{sec:formalizacion}, se relacionaron los objetivos que debía cumplir el sistema con tareas a más bajo nivel. De esta manera, se va a realizar la comprobación sobre el cumplimiento de los objetivos en base al nivel de cumplimiento de las tareas con las que se asociaron.
+
+
+\subsection{Permitir que los usuarios modifiquen y vean los cambios en los documentos en tiempo real.}
 \label{subsec:objetivos-conc-sincro}
+
+El aspecto fundamental de este objetivo era conseguir la sincronización en tiempo real de los \textit{notebooks}. Una vez lograda esta soncronización, los usuarios serán capaces de ver los cambios realizados en los documentos o, en caso de tener permiso para hacerlo, modificarlos.
 
 La sincronización en tiempo real de los documentos se ha conseguido llevar a cabo. Se ha utilizado la solución que hacía uso de la carga y guardado de \textit{notebooks} en disco, cuyo análisis se puede ver en la subsección \ref{subsec:sincro}. Este modelo es funcional, pero tiene aspectos de mejora, como pueden ser el consumo innecesario de recursos, pues se está haciendo un \textit{\gls{polling}} constante para cargar los archivos; así como el aumento de tiempo de interacción a medida que los \textit{notebooks} van siendo más pesados, ya que no da tiempo a que se carguen los documentos enteros dentro del intervalo especificado.
 
 Una mejora a considerar sería, por ejemplo, la actualización únicamente de las celdas modificadas. Ésto arreglaría los dos problemas previamente comentados, pues si un documento no ha sido modificado en el intervalo de tiempo, no se cargaría nada, y, en el caso de haber modificaciones, el consumo de recursos sería pequeño independientemente del tamaño del documento. 
 
-En conclusión, la sincronización de los \textit{notebooks} se ha conseguido, ya que hemos llegado a un punto donde se puede hacer uso de la plataforma sin que sea una gran inconveniencia. Sin embargo, hay margen de mejora, y se podría llegar a soluciones más eficientes, con un menor consumo de recursos y tiempo de espera.
+En conclusión, la sincronización de los \textit{notebooks} se ha conseguido, ya que hemos llegado a un punto donde se puede hacer uso de la plataforma sin que sea una gran inconveniencia. Sin embargo, hay margen de mejora, y se podría llegar a soluciones más eficientes, con un menor consumo de recursos y tiempo de espera. Por lo tanto, el sistema permite que los usuarios modifiquen y vean los cambios en los documentos en tiempo real.
 
-\subsection{Crear un sistema de roles y permisos para los usuarios.}
+\subsection{Gestionar los usuarios, sus permisos y sus sesiones.}
 \label{subsec:objetivos-conc-roles}
 
-La creación de un sistema de roles se ha realizado correctamente. Todos los permisos que se pretenden representar en la aplicación están incluídos en algún rol. Los roles están bien diferenciados y cumplen su función dentro del entorno colaborativo. 
+A la hora de llevar a cabo este objetivo, se consideraron necesarias la autenticación, autorización e identificación de los usuarios en la plataforma, así como el guardado y mantenimiento de sus sesiones.
 
-El sistema que se ha implementado en el proyecto solo permite un editor a la vez. La colaboración se consigue pasando el rol de editor entre los diferentes usuarios, así como haciendo que todos ellos vean los cambios en tiempo real. Una de las mejoras que podría tener nuestro sistema sería la posibilidad que se editara simultáneamente el documento por más de un usuario. Ésto es un tema delicado, pues el diseño de un sistema con más de un editor concurrente presenta diversas complicaciones. Esta idea se detallará en el capítulo \ref{ch:futuro}.
-
-Por tanto, la creación del sistema de roles se puede considerar exitosa. En cuanto al modelo de interacción, el elegido es posible que resulte un poco simple y limitado, y sería un aspecto a mejorar en versiones futuras, aunque cumple su trabajo y permite una colaboración fluida. 
-
-\subsection{Autenticar a los usuarios.}
+\subsubsection{Autenticación.}
 \label{subsec:objetivos-conc-auth}
 
 El objetivo de la autenticación se ha cumplido con creces. La plataforma \textit{Auth0} nos ofrece una autenticación segura y robusta, haciendo uso de tecnologías muy extendidas como \textit{OAuth}. Es una solución sencilla para los usuarios, ya que pueden utilizar la identificación de un tercero o bien crear una cuenta con su usuario y contaseña. 
 
 \textit{Auth0} nos permite añadir más capas de seguridad, como aumentar los requisitos necesarios para las contraseñas en nuestro sistema o utilizar verificación en dos pasos. No se ha hecho uso de estas opciones en la aplicación porque no se estiman necesarias, sin embargo, en caso de querer utilizarse, es tan sencillo como seleccionarlo en el menú de configuración de \textit{Auth0}, por lo que sería un cambio immediato.
 
+Además, \textit{Auth0} permite el uso de su sistema hasta por 7000 usuarios activos al mes de forma gratuita\footnote{https://auth0.com/blog/announcing-our-new-pricing-including-a-production-ready-free-account/}. Se trata de una herramienta escalable, pero, en el caso de ser utilizada por más usuarios, pasaría a ser de pago. Por otro lado, nos facilita la administración de estos usuarios, pues ofrece la posibilidad de denegar el acceso a usuarios en concreto o de organizarlos en grupos.
+
 En conclusión, la autenticación se ha realizado de una manera muy completa, utilizando tecnología sencilla, moderna y robusta.
 
-\subsection{Compartir los documentos.}
+\subsubsection{Autorización.}
+
+La autorización se ha llevado a cabo mediante la creación de un sistema de roles. Este sistema de roles se ha implementado correctamente. Todos los permisos que se pretenden representar en la aplicación están incluídos en algún rol. Los roles están bien diferenciados y cumplen su función dentro del entorno colaborativo. 
+
+El sistema que se ha implementado en el proyecto solo permite un editor a la vez. La colaboración se consigue pasando el rol de editor entre los diferentes usuarios, así como haciendo que todos ellos vean los cambios en tiempo real. Una de las mejoras que podría tener nuestro sistema sería la posibilidad que se editara simultáneamente el documento por más de un usuario. Ésto es un tema delicado, pues el diseño de un sistema con más de un editor concurrente presenta diversas complicaciones. Esta idea se detallará en el capítulo \ref{ch:futuro}.
+
+Por tanto, la autorización se puede considerar exitosa. En cuanto al modelo de interacción, el elegido es posible que resulte un poco simple y limitado, y sería un aspecto a mejorar en versiones futuras, aunque cumple su trabajo y permite una colaboración fluida. 
+
+\subsubsection{Identificación.}
+
+La identificación se obtiene mediante la plataforma \textit{Auth0}. Cuando un usuario se autentica mediante un proveedor de identidad externo, es este proveedor el que facilita el identificador público que se utilizará en \textit{Jupyter}. En el caso de utilizar a el propio \textit{Auth0} como proveedor de indentidad, los usuarios podrán elegir su identificador. 
+
+Se trata de una solución sencilla, pero que cumple su cometido, que es el de identificar a los usuarios y poderlos reconocer dentro de la plataforma.
+
+\subsubsection{Mantener las sesiones de los usuarios.}
+\label{subsec:objetivos-conc-session}
+
+El guardado de las sesiones de los usuarios se ha conseguido haciendo uso de \textit{cookies}. Se utiliza una \textit{cookie} que genera el servidor de \textit{notebooks}, y que funciona como identificador del usuario. Esta \textit{cookie} se almacena en la base de datos y obliga a que el usuario se vuelva a autenticar una vez caduca.
+
+Se trata de una solución muy común para mantener las sesiones, y que, en el caso de nuestra aplicación, funciona correctamente. Por lo tanto, podemos decir que se ha cumplido la tarea.
+
+
+\subsection{Gestión de notebooks.}
 \label{subsec:objetivos-conc-compartir}
+
+La gestión de los documentos se ha conseguido, delegando sobre los usuarios con permisos de administración en cada documento la gestión de éste. Se pueden realizar todas las acciones disponibles en el \textit{Jupyter} original, como el borrado o renombrado de los \textit{notebooks}. Para conseguir una gestión completa en base a la necesidades del proyecto, se ha añadido la opción de la compartición de notebooks. 
 
 Es posible compartir los documentos dentro de la plataforma, pero es un aspecto que esta sujeto a mejoras considerables. El sistema de compartición actual muestra una lista de usuarios registrados en la plataforma. De esta manera se puede seleccionar al usuario que se quiere invitar al documento para que pase a formar parte de él. Uno de los problemas que plantea este sistema es precisamente el hecho de que los usuarios que se quieren añadir a un documento tienen que estar obligatoriamente dados de alta en la plataforma.
 
 Una solución para este problema sería disponer de la posibilidad de compartir el documento bien mediante un \textit{\gls{link}} o un correo electrónico, de esta manera se podría invitar a usuarios externos a la plataforma a participar en documentos, haciendo que se registraran a través del enlace recibido y aparecieran directamente como Espectadores en el documento en cuestión.
 
-Por lo tanto, la compartición de los documentos es posible y funcional, aunque se podría mejorar para aumentar su versatilidad.
+Por lo tanto, la compartición de los documentos es posible y funcional, aunque se podría mejorar para aumentar su versatilidad. Como el resto de aspectos de la gestión formaban parte del \textit{Jupyter} original, podemos concluir que se puede realizar una gestión completa de los \textit{notebooks} en nuestro sistema al haber añadido este útimo.
 
-\subsection{Persistir la información necesaria.}
+\subsection{Soporte de colaboración en distintas sesiones de trabajo.}
 \label{subsec:objetivos-conc-persistir}
 
-La persistencia de la información se ha conseguido mediante el uso de una base de datos. Cumple todas las funciones que se requieren para el componente, por lo que el objetivo queda bastante completo. En cuanto a las mejoras disponibles, por el momento no es necesario almacenar más información. En el caso de hacer falta, se debería rediseñar la estructura de tablas de la base de datos en función a la necesidad. 
+El aspecto más importante a realizar para umplir este objetivo ha sido implementar una capa de persistencia en nuestro sistema. La persistencia de la información se ha conseguido mediante el uso de una base de datos. Cumple todas las funciones que se requieren para el componente, por lo que el objetivo queda bastante completo. En cuanto a las mejoras disponibles, por el momento no es necesario almacenar más información. En el caso de hacer falta, se debería rediseñar la estructura de tablas de la base de datos en función a la necesidad. 
 
-En conclusión, la base de datos es una solución completa para el problema de la persistencia, y se puede modificar para adaptarse a la información necesaria en caso de ésta cambiara.
-
-\subsection{Mantener las sesiones de los usuarios.}
-\label{subsec:objetivos-conc-session}
-
-El guardado de las sesiones de los usuarios se ha conseguido haciendo uso de \textit{cookies}. Se utiliza una \textit{cookie} que genera el servidor de \textit{notebooks}, y que funciona como identificador del usuario. Esta \textit{cookie} se almacena en la base de datos y obliga a que el usuario se vuelva a autenticar una vez caduca.
-
-Se trata de una solución muy común para mantener las sesiones, y que, en el caso de nuestra aplicación, funciona correctamente. Por lo tanto, podemos decir que el objetivo está cumplido.
-
-
+En conclusión, la base de datos es una solución completa para el problema de la persistencia, y se puede modificar para adaptarse a la información necesaria en caso de que ésta cambiara. Al solucionar este problema, podrá colaborar en distintas sesiones de trabajo, cumpliéndose el objetivo.
+ 
 % CONOCIMIENTOS ADQUIRIDOS
 
 \section{Conocimientos adquiridos}
@@ -1009,11 +1034,15 @@ Se trata de una solución muy común para mantener las sesiones, y que, en el ca
 
 A lo largo del desarrollo del proyecto he trabajado con tecnologías que no había tratado durante los cuatro años del grado. Ésto me ha hecho tener que investigarlas, leer sobre ellas, buscar ejemplos e intentar conocer su funcionamiento para poder utilizarlas en la aplicación que se desarrollaba. He seguido un procedimiento bastante autodidacta, aprendiendo por mí mismo a enfrentarme a un problema, buscar soluciones, compararlas y elegir aquella que mejor se adapte al problema planteado.
 
-Por otro lado, he aprendido a trabajar en un entorno real y con una aplicación establecida y profesional. El hecho de tomar como punto de partida para el proyecto el repositorio de \textit{Jupyter} me ha ayudado a comprender la forma de trabajar de un equipo de expertos, me ha acercado al mundo del \textit{software} libre y me ha obligado a estructurar mejor mi código, siguiendo las guias de estilo de la plataforma.
+Por otro lado, he aprendido a trabajar en un entorno real y con una aplicación establecida y profesional. El hecho de tomar como punto de partida para el proyecto el repositorio de \textit{Jupyter} me ha ayudado a comprender la forma de trabajar de un equipo de expertos, me ha acercado al mundo del \textit{software} libre y me ha obligado a estructurar mejor mi código, siguiendo las guias de estilo de la plataforma. 
+
+También me ha hecho crecer mucho, tanto a nivel personal como profesional llevar a cabo este proyecto en el ámbito de unas prácticas de empresa. Ha sido muy interesante contar con la asesoría y experiencia de mis tutores y compañeros a la hora de afrontar los problemas que se me planteaban en el desarrollo del trabajo, así como aprender de las metodologías y técnicas que ellos emplean. 
 
 A continuación, mostraré una breve lista de aspectos concretos y tecnologías que he utilizado y aprendido a lo largo del proyecto:
 
 \begin{itemize}
+
+\item Funcionamiento y utilización de \textit{notebooks}, además de su estructura interna y ciclo de ejecución.
 
 \item Profundización en el protocolo \textit{HTTP}, así como la creación de un servidor web y el uso de la herramienta \textit{Tornado}
 
@@ -1022,6 +1051,8 @@ A continuación, mostraré una breve lista de aspectos concretos y tecnologías 
 \item Ampliación de mis conocimientos sobre bases de datos, así como la puesta en marcha y uso de una.
 
 \item Trabajo con navegadores, \textit{HTML} y \textit{JavaScript} en ellos, además del uso y programación de \textit{cookies} 
+
+\item Utilización y familiarización con \textit{LaTeX}\footnote{https://www.latex-project.org/}.
 \end{itemize}
 
 Pienso que este trabajo ha sido muy beneficioso para mí, pues he aprendido mucho de él. Todos estos aspectos mencionados anteriormente no los aprendí en el grado, pero si que he puesto en práctica muchas otras cosas aprendidas en ese periodo, como comentaré en la sección \ref{sec:estudios-cursados}.
@@ -1031,7 +1062,7 @@ Pienso que este trabajo ha sido muy beneficioso para mí, pues he aprendido much
 \section{Relación del trabajo desarrollado con los estudios cursados}
 \label{sec:estudios-cursados}
 
-Los conocimientos que adquirí en el grado en igeniería informática han tenido una gran importancia en el desarrollo de este proyecto. Desde mi punto de vista, la carrera me ha formado a un nivel básico en la gran mayoría de áreas de la informática, y ha profundizado en algunas de ellas, más concretamente en los campos relacionados con la rama que yo elegí, la computación. Han sido los primeros los que más han intervenido en el desarrollo de este proyecto.
+Los conocimientos que adquirí en el grado en igeniería informática han tenido una gran importancia en el desarrollo de este proyecto. Desde mi punto de vista, la carrera me ha formado a un nivel básico en la gran mayoría de áreas de la informática, y ha profundizado en algunas de ellas, más concretamente en los campos relacionados con la rama que yo elegí, la computación. Dadas las características del proyecto, y su escasa afinidad con el temario cursado en la rama de computación, he hecho un uso mas amplio de los conocimientos básicos y generales comentados previamente.
 
 Haciendo un barrido de términos generales a específicos, los contenidos aprendidos en el grado aplicados en este trabajo, han sido los siguientes: 
 
@@ -1047,7 +1078,7 @@ Haciendo un barrido de términos generales a específicos, los contenidos aprend
 
 \end{itemize}
 
-A parte de los aspectos técnicos aprendidos, cabe destacar la importancia que tiene el hecho de trabajar la resolución de problemas. En el transcurso del grado, se insiste en que el alumnado se enfrente a problemas de manera independiente. De esta manera, cuando el alumno se enfrenta a un problema real, sabe por donde atacarlo y puede llegar a conclusiones y resultados por si mismo. Estos conocimientos han sido vitales a la hora de realizar el trabajo, pues se trata de un desarrollo en solitario, y puede resultar abrumador plantear problemas sin tener un conocimiento básico de como empezar a resolverlos.
+A parte de los aspectos técnicos aprendidos, cabe destacar la importancia que tiene el hecho de trabajar la resolución de problemas. En el transcurso del grado, se insiste en que el alumnado se enfrente a problemas de manera independiente. De esta manera, cuando el alumno se enfrenta a un problema real, sabe por donde atacarlo y puede llegar a conclusiones y resultados por si mismo. Estos conocimientos han sido vitales a la hora de realizar el trabajo, pues, a pesar de seguir una rutina de reuniones y tener un apoyo de los tutores en las decisiones técnicas, puede resultar abrumador plantear problemas sin tener un conocimiento básico de como empezar a resolverlos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                          TRABAJOS FUTUROS                                   %
