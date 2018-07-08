@@ -155,9 +155,9 @@
 % les paraules clau i el resum en els tres idiomes                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\keywords{????, ?????????, ????, ?????????????????} % Paraules clau 
-         {?????, ???, ???????????????}              % Palabras clave
-         {?????, ????? ?????, ?????????????}        % Key words
+\keywords{jupyter, notebooks, computació interactiva, col·laboració, anàlisis de dades, python} % Paraules clau 
+         { jupyter, notebooks, computación interactiva, colaboración, análisis de datos, python }              % Palabras clave
+         {jupyter, notebooks, interactive computation, collaboration, data analytics, python }        % Key words
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                              INICI DEL DOCUMENT                             %
@@ -170,13 +170,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-????
+El treball realitzat ha consistit en la creació de un entorn col·laboratiu permissionat per a \textit{Jupyter}. \textit{Jupyter} és una ferramenta per a la computació interactiva en diferents llenguatges  de programació. Ofereix una forma de treballar molt intuïtiva i visual, utilitzant documents interactius anomenats \textit{notebooks} , així que adaptar-la a un ámbit col·laboratiu pot ser molt interessant per als usuaris. Per a assolir el objectiu proposat s'han dut a terme una serie de tasques, com són la sincronització en temps real dels \textit{notebooks}, la implementació de un sistema de autenticació, autorització e identificació dels usuaris, la gestió dels \textit{notebooks} i, per últim, la creació de una capa de persistència per a la plataforma. S'han emprat tecnologies com \textit{Tornado} per als serveis web, \textit{Auth0} per a l'autenticació i \textit{SQLite} com a sistema gestor de la base de dades, entre altres. S'ha obtés com a resultat del treball una aplicació que, comptant amb aspectes de millora, compleix totes les funcionalitats previstes de forma correcta.
 \end{abstract}
 \begin{abstract}[spanish]
-El trabajo realizado ha consistido en la creación de un entorno colaborativo permisionado para \textit{Jupyter}. \textit{Jupyter} es una herramienta para la computación interactiva en diferentes lenguajes de programación. Ofrece una forma de trabajar muy intuitiva y visual, por lo que adaptarla a un ámbito colaborativo puede ser muy interesante para los usuarios. Para alcanzar el objetivo propuesto se han llevado a cabo una serie de tareas, como son la sincronización en tiempo real de los notebooks, la creación de un sistema de roles y permisos, la autenticación de los usuarios y el mantenimiento de sus sesiones, la persistencia de los datos y, por último, la compartición de documentos. Se ha hecho uso de tecnologías como \textit{Tornado} para los servicios \textit{web}, \textit{Auth0} para la autenticación y \textit{SQLite} como sistema gestor de la base de datos, entre otras. 
+El trabajo realizado ha consistido en la creación de un entorno colaborativo permisionado para \textit{Jupyter}. \textit{Jupyter} es una herramienta para la computación interactiva en diferentes lenguajes de programación. Ofrece una forma de trabajar muy intuitiva y visual, utilizando documentos interactivos llamados \textit{notebooks}, así que adaptarla a un ámbito colaborativo puede ser muy interesante para los usuarios. Para alcanzar el objetivo propuesto se han llevado a cabo una serie de tareas, como son la sincronización en tiempo real de los \textit{notebooks}, la implementación de un sistema de autenticación, autorización e identificación de los usuarios,la gestión de los \textit{notebooks} y, por último, la creación de una capa de persistencia para la plataforma. Se ha hecho uso de tecnologías como \textit{Tornado} para los servicios \textit{web}, \textit{Auth0} para la autenticación y \textit{SQLite} como sistema gestor de la base de datos, entre otras. Se ha obtenido como resultado del trabajo una aplicación que, contando con aspectos de mejora, cumple todas las funcionalidades previstas de forma correcta.
 \end{abstract}
+\clearpage
 \begin{abstract}[english]
-????
+This project has consisted on the creation of a collaborative and permission-based environment for \textit{Jupyter}. \textit{Jupyter} is a tool for interactive computation in several programming languages. It offers a very visual and intuitive way of working, using interactive documents called notebooks, so adapting it to a collaborative ambit can be very interesting to its users. In order to reach the proposed objective several tasks have been carried out. For example the real-time synchronization of the notebooks, the implementation of a authentication, authorization and identification system for the users,  the notebook management and the creation of a persistence layer for the platform. The following technologies have been used: \textit{Tornado} for the web services, \textit{Auth0} for the authentication and \textit{SQLite} as the managing system for the database, amongst others.  As a result of the project we have obtained an application that, having room for improvement, fulfills all the planned functionalities successfully.
+
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,7 +203,7 @@ Existe un gran tradición en el ámbito de la computación interactiva, siendo l
 
 Existe un gran numero de plataformas que hacen uso de este sistema de notebooks, desde su introducción en 1988 con \textit{Mathematica}\footnote{https://www.wolfram.com/mathematica/}. Algunos ejemplos son \textit{Maple} \footnote{https://www.maplesoft.com/}, \textit{Matlab}\footnote{https://www.mathworks.com/products/matlab.html} o \textit{Jupyter}\footnote{http://jupyter.org/}. Es este último en el que se va a centrar el desarrollo del proyecto, que consistirá en la creación de un entorno colaborativo para su uso concurrente por más de un usuario, ya que no se ofrece de forma nativa en la plataforma. Para aquellos que no conozcan la herramienta, se va a realizar una breve introducción:
 
-\textit{Jupyter } es una herramienta para la programación interactiva en diferentes leguajes. Nace como la sucesión natural de \textit{IPython} \textit{(Interactive Python)}. Se trata de un programa que extendía las funcionalidades de la propia terminal de \textit{Python} con la intención de que su uso fuera más interactivo. Más adelante, este proyecto pasaría a utilizar un sistema de \textit{notebooks}. La estructura del \textit{notebook} es bastante sencilla. Internamente es un documento \textit{\gls{JSON}}, con bloques denominados celdas, los cuales tienen una entrada \textit{(input)} y una salida \textit{(output)}. Para que el \textit{notebook} sea legible, se visualiza de una manera ordenada, mostrando sólo el código y los resultados obtenidos al usuario y haciendo que el uso de la herramienta sea lo más fluido posible.   
+\textit{Jupyter } es una herramienta para la programación interactiva en diferentes lenguajes. Nace como la sucesión natural de \textit{IPython} \textit{(Interactive Python)}. Se trata de un programa que extendía las funcionalidades de la propia terminal de \textit{Python} con la intención de que su uso fuera más interactivo. Más adelante, este proyecto pasaría a utilizar un sistema de \textit{notebooks}. La estructura del \textit{notebook} es bastante sencilla. Internamente es un documento \textit{\gls{JSON}}, con bloques denominados celdas, los cuales tienen una entrada \textit{(input)} y una salida \textit{(output)}. Para que el \textit{notebook} sea legible, se visualiza de una manera ordenada, mostrando sólo el código y los resultados obtenidos al usuario y haciendo que el uso de la herramienta sea lo más fluido posible.   
 Esta mejora sería bastante significativa, pues se podía mantener una persistencia entre sesiones, ya que los \textit{notebooks} pueden ser guardados y cargados. El siguiente paso fué saltar al proyecto \textit{Jupyter}, cuyo cambio más importante fué la posibilidad de trabajar con lenguajes diferentes a \textit{Python}. Ésto se consigue desacoplando la lógica de la ejecución del código del servicio principal de edición de \textit{notebooks}. El código a ejecutar se manda a un proceso que lo recibe, lo ejecuta y lo devuelve. Estos procesos se llaman \textit{kernels}, y a día de hoy existen \textit{kernels} para más de 100 lenguajes que pueden ser utilizados con \textit{Jupyter}\footnote{https://github.com/jupyter/jupyter/wiki/Jupyter-kernels}.
 
 Al no facilitar de manera nativa la colaboración entre usuarios, \textit{Jupyter} nos deja la posibilidad de trabajar mandando el \textit{notebook} entre los diferentes autores a medida que se va modificando. Ésto es un método poco eficiente, principalmente por dos razones. En primer lugar, \textit{Jupyter} tiene una mala interacción con los servicios de control de versiones, pues el usuario modifica las celdas, pero realmente lo que cambia es el \textit{JSON} interno. La herramienta de control de versiones busca los cambios entre estos documentos \textit{JSON}, y encuentra muchas más diferencias de las que se realizaron por los usuarios, pues ellos sólo alteraron las celdas, pero internamente estos cambios se representaron de una forma mucho más extensa. Ésto supone problemas en cuanto a la usabilidad de este control de versiones, pues los cambios no son fácilmente legibles. 
@@ -215,13 +217,15 @@ En resumen, trabajar de forma colaborativa haciendo uso de \textit{Jupyter} a d�
 \section{Motivaci\'on}
 \label{sec:motivacion}
 
-El trabajo se ha llevado a cabo dentro del ámbito de unas prácticas de empresa en el Instituto Tecnológico de Informática\footnote{https://www.iti.es/}. Desde el instituto se me realizaron una serie de propuestas interesantes para la realización de este Trabajo de Fin de Grado. La primera fué la adaptación de la base de datos \textit{RethinkDB} \footnote{https://www.rethinkdb.com/} para introducirla como un componente en un sistema de \textit{PaaS}. Por otro lado se planteó la creación de un entorno colaborativo para el diseño, desarrollo y compilación de notebooks de trabajo \textit{Jupyter} compartidos. Después de estudiar las dos opciones a fondo, me decanté por la segunda propuesta, pues ya había hecho uso de la plataforma y me había enfrentado a los problemas que supone utilizarla en un ámbito colaborativo.
+El trabajo se ha llevado a cabo dentro del ámbito de unas prácticas de empresa en el Instituto Tecnológico de Informática\footnote{https://www.iti.es/}. Desde el instituto se realizaron una serie de propuestas interesantes para la realización de este Trabajo de Fin de Grado. La primera fué la adaptación de la base de datos \textit{RethinkDB} \footnote{https://www.rethinkdb.com/} para introducirla como un componente en un sistema de \textit{PaaS}. Por otro lado se planteó la creación de un entorno colaborativo para el diseño, desarrollo y compilación de notebooks de trabajo \textit{Jupyter} compartidos. Después de estudiar las dos opciones a fondo, me decanté por la segunda propuesta, pues ya había hecho uso de la plataforma y me había enfrentado a los problemas que supone utilizarla en un ámbito colaborativo.
 
 \textit{Jupyter} es una plataforma que puede ser utilizada para diversos fines, ya que la manera que tiene de presentar el código y los resultados es muy visual. Ésto ha hecho que sea un recurso muy utilizado en entornos donde es importante entender qué hace cada trozo de código, como por ejemplo en la educación o en el análisis de datos. En estas situaciones se trabaja mucho en grupos, y la posibilidad de utilizar \textit{Jupyter} de manera colaborativa entre los miembros de estos grupos puede facilitar mucho el desarrollo de los proyectos.
 
-Existen herramientas que proponen un \textit{Jupyter} colaborativo a través de internet, como \textit{Google Colab} \footnote{https://colab.research.google.com} o \textit{CoCalc} \footnote{https://cocalc.com/}. Estas plataformas permiten una edición de los \textit{notebooks} simultánea, haciendo que dos o más usuarios puedan modificar los contenidos del \textit{notebook} a la vez y sin control alguno. Desde mi punto de vista, este enfoque a un \textit{Jupyter} colaborativo no es el más adecuado, ya que puede resultar caótico, y pienso que un entorno con políticas más restrictivas en cuanto a la modificación de los documentos puede ser más acorde con el modelo de ejecución. Además, aunque estas herramientas previamente comentadas ofrecen planes gratuitos, el poder computacional de las máquinas que utilizan es muy bajo, haciendo que la interacción sea tosca y pesada. Si se quieren utilizar alternativas más potentes se aplicará el coste monetario correspondiente, por lo que proponer una alternativa propia permitirá utilizar las máquinas de las que se disponga.
+Existen herramientas que proponen un \textit{Jupyter} colaborativo a través de internet, como \textit{Google Colab} \footnote{https://colab.research.google.com} o \textit{CoCalc} \footnote{https://cocalc.com/}. Estas plataformas permiten una edición de los \textit{notebooks} simultánea, haciendo que dos o más usuarios puedan modificar los contenidos del \textit{notebook} a la vez y sin control alguno. Este enfoque a un \textit{Jupyter} colaborativo no es el más adecuado, ya que puede resultar caótico. Un entorno con políticas más restrictivas en cuanto a la modificación de los documentos puede ser más acorde con el modelo de ejecución. Además, aunque estas herramientas previamente comentadas ofrecen planes gratuitos, el poder computacional de las máquinas que utilizan es muy bajo, haciendo que la interacción sea tosca y pesada. Si se quieren utilizar alternativas más potentes se aplicará el coste monetario correspondiente, por lo que proponer una alternativa propia permitirá utilizar las máquinas de las que se disponga.
 
-A nivel personal, pienso que tomar como base para mi Trabajo de Fin de Grado un proyecto real puede ser muy beneficioso, ya que tengo la oportunidad de ver como se trabaja en entornos profesionales, y más concretamente en el ámbito real de un instituto tecnológico. Además, me tengo que enfrentar a problemas nuevos para mí, como el diseño de una arquitectura o la implementación de un servicio \textit{web}. 
+A nivel personal, pienso que tomar como base para mi Trabajo de Fin de Grado un proyecto real ha sido muy beneficioso, ya que tengo la oportunidad de ver como se trabaja en entornos profesionales, y más concretamente en el ámbito real de un instituto tecnológico. Además, me tengo que enfrentar a problemas nuevos para mí, como el diseño de una arquitectura o la implementación de un servicio \textit{web}. 
+
+En conclusión, la motivación para llevar a cabo este trabajo viene dada por el conocimiento de los problemas de la plataforma \textit{Jupyter} a la hora de utilizarla en ámbitos colaborativos; el interés por parte del Instituto tecnológico de Informática en la realización del proyecto; la falta de alternativas que se adecuen a la visión que se tiene sobre la colaboración y el crecimiento a nivel personal y profesional que se pueda obtener.  
 
 
 % OBJETIVOS
@@ -263,7 +267,7 @@ Se espera que la herramienta resultante facilite el uso de \textit{Jupyter} en s
 
 La metodología seguida para el desarrollo del trabajo ha sido la siguiente. En primer lugar, se realizó un estudio de las herramientas similares a \textit{Jupyter} con el fin de situarla dentro del contexto tecnológico del momento. Después se realizó un estudio a fondo del código de la plataforma, para conseguir una visión general de su funcionamiento interno. Siguiendo los objetivos marcados, se ha procedido a realizar primero un diseño estructural de cada una de las partes. Este diseño se ha comparado con otros exhaustivamente para elegir el que mejor se adecuara al apartado tratado. Más tarde se procede a implementar la parte en base al diseño, y por último a hacer pruebas con el fin de encontrar fallos o \textit{\gls{bug}s} y poder solucionarlos.
 
-En cuanto a la interacción con el tutor y compañeros en la empresa, se han realizado reuniones periódicas a lo largo del desarrollo del proyecto. Se discuten los puntos a tratar y se proponen soluciones a los posibles problemas encontrados.
+En cuanto a la interacción con el tutor y compañeros en la empresa, se han realizado reuniones periódicas a lo largo del desarrollo del proyecto. Se han discutido los puntos a tratar y se proponen soluciones a los posibles problemas encontrados.
 
 
 % ESTRUCTURA DE LA MEMORIA
@@ -271,7 +275,7 @@ En cuanto a la interacción con el tutor y compañeros en la empresa, se han rea
 \section{Estructura de la memoria}
 \label{sec:estructura}
 
-La memoria seguirá una estructura bastante convencional según la guías que ofrece la \textit{UPV}. Se comenzará hablando del estado del arte en el capítulo \ref{ch:state-of-art}, donde se hará una comparativa de \textit{Jupyter} con plataformas similares, en los capítulos \ref{ch:analisis-problema}, \ref{ch:diseno-solu} y \ref{ch:desarrollo-solucion} se planteará el problema, las diferentes soluciones propuestas para resolverlo, así como el diseño y desarrollo de éstas. En los dos capítulos siguientes, \ref{ch:implantacion} y \ref{ch:pruebas} se hablará de la implantación del sistema, cómo desplegarlo y ponerlo en marcha, así como de las pruebas realizadas a éste. Por último, se hará una conclusión del trabajo, exponiendo si se han alcanzado los objetivos y de qué manera, y se propondrán mejoras que se pueden llevar a cabo en un futuro, capítulos \ref{ch:conclusiones} y \ref{ch:futuro}. 
+La memoria seguirá una estructura según la guías que ofrece la \textit{UPV}. Se comenzará hablando del estado del arte en el capítulo \ref{ch:state-of-art}, donde se hará una comparativa de \textit{Jupyter} con plataformas similares, en los capítulos \ref{ch:analisis-problema}, \ref{ch:diseno-solu} y \ref{ch:desarrollo-solucion} se planteará el problema, las diferentes soluciones propuestas para resolverlo, así como el diseño y desarrollo de éstas. En los dos capítulos siguientes, \ref{ch:implantacion} y \ref{ch:pruebas} se hablará de la implantación del sistema, cómo desplegarlo y ponerlo en marcha, así como de las pruebas realizadas a éste. Por último, se hará una conclusión del trabajo, exponiendo si se han alcanzado los objetivos y de qué manera, y se propondrán mejoras que se pueden llevar a cabo en un futuro, capítulos \ref{ch:conclusiones} y \ref{ch:futuro}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -290,15 +294,15 @@ La memoria seguirá una estructura bastante convencional según la guías que of
 
 La plataforma \textit{Jupyter} utiliza un modelo de funcionamiento basado en la programación interactiva. El usuario puede realizar computaciones y recibir resultados al instante, haciendo que el flujo de trabajo sea muy cómodo, ya que se pueden realizar cambios y correcciones con una gran immediatez.
 
-La programación interactiva es un recurso que se lleva utilizando desde la década de los 60. Los ejemplos más comunes para este tipo de modelo de funcionamiento son los intérpretes de comandos o \textit{shells}. Algunos lenguajes de programación que ofrecen una \textit{shell} con una interfaz de linea de comandos (\textit{CLI}) son \textit{Python} \footnote{https://www.python.org/}, \textit{JavaScript} \footnote{https://www.javascript.com/}, \textit{Ruby} \footnote{https://www.ruby-lang.org/en/} o \textit{Lisp} \footnote{https://es.wikipedia.org/wiki/Lisp}. Es éste último lenguaje en el que se origina el concepto que sirve como base para la programación interactiva basada en intérpretes de comandos. Se trata del \textit{REPL}, el bucle de Lectura-Evaluación-Impresión, en inglés \textit{Read-Eval-Print-Loop}. Este bucle está compuesto por la lectura de las expresiones introducidas por el usuario (\textit{Read}), la evaluación de estas expresiones por el intérprete (\textit{Eval}), la impresión de los resultados obtenidos (\textit{Print}) y, por último, se vuelve a aceptar una nueva entrada para se computada cerrándose el bucle (\textit{Loop}). Podemos encontrar un estudio más amplio sobre el modelo de programación interactiva, y en concreto sobre \textit{Lisp} en el artículo de Erik Sandewall \cite{Sandewall}.
+La programación interactiva es un recurso que se lleva utilizando desde la década de los 60. Los ejemplos más comunes para este tipo de modelo de funcionamiento son los intérpretes de comandos o \textit{shells}. Algunos lenguajes de programación que ofrecen una \textit{shell} con una interfaz de linea de comandos (\textit{CLI}) son \textit{Python} \footnote{https://www.python.org/}, \textit{JavaScript} \footnote{https://www.javascript.com/}, \textit{Ruby} \footnote{https://www.ruby-lang.org/en/} o \textit{Lisp} \footnote{https://es.wikipedia.org/wiki/Lisp}. Es éste último lenguaje en el que se origina el concepto que sirve como base para la programación interactiva basada en intérpretes de comandos. Se trata del \textit{REPL}, el bucle de Lectura-Evaluación-Impresión, en inglés \textit{Read-Eval-Print-Loop}. Este bucle está compuesto por la lectura de las expresiones introducidas por el usuario (\textit{Read}), la evaluación de estas expresiones por el intérprete (\textit{Eval}), la impresión de los resultados obtenidos (\textit{Print}) y, por último, se vuelve a aceptar una nueva entrada para se computada cerrándose el bucle (\textit{Loop}). Se puede encontrar un estudio más amplio sobre el modelo de programación interactiva, y en concreto sobre \textit{Lisp} en el artículo de Erik Sandewall \cite{Sandewall}.
 
-Aparte de las ventajas previamente comentadas sobre este modelo de programación basado en los \textit{shells}, encontramos muchos defectos, como pueden ser la pérdida de información entre sesiones o la ausencia de \textit{rich output}, es decir la imposibilidad de mostrar resultados como imágenes o gráficos. Con la intención de solventar estos problemas, concretamente en el lenguaje \textit{Python}, en 2001 Fernando Pérez desarrolló la plataforma \textit{IPython} (\textit{Interactive Python}) \cite{ipython}. Esta plataforma extendía las funcionalidades del \textit{shell} por defecto de \textit{Python}, añadiendo algunas mejoras, como la posibilidad de mostrar la \textit{historia} (las instrucciones ejecutadas anteriormente) o la identificación de errores.
+Aparte de las ventajas previamente comentadas sobre este modelo de programación basado en los \textit{shells}, se encuentran muchos defectos, como pueden ser la pérdida de información entre sesiones o la ausencia de \textit{rich output}, es decir la imposibilidad de mostrar resultados como imágenes o gráficos. Con la intención de solventar estos problemas, concretamente en el lenguaje \textit{Python}, en 2001 Fernando Pérez desarrolló la plataforma \textit{IPython} (\textit{Interactive Python}) \cite{ipython}. Esta plataforma extendía las funcionalidades del \textit{shell} por defecto de \textit{Python}, añadiendo algunas mejoras, como la posibilidad de mostrar la \textit{historia} (las instrucciones ejecutadas anteriormente) o la identificación de errores.
 
-El siguiente paso en el desarrollo de \textit{Ipython} sería lograr la persistencia absoluta de los datos, ya no solo mediante el uso de la \textit{historia} sino utilizando un sistema de \textit{notebooks}. En 1988, Steve Wolfram desarrolla \textit{Mathematica} \cite{math}, un programa para la computación matemática. Brian Hayes realiza una breve introducción en \cite{th-mathematica}. Este programa fué el primero en implementar este sistema de \textit{notebooks}, que sería utilizado por \textit{Ipython} más tarde. Los \textit{notebooks} son documentos con celdas que sirven como entrada. El usuario puede escribir código en ellas y ejecutarlas, lo que dará un resultado que se mostrará en la parte inferior de la celda, es decir, la salida. Este sistema propone un enfoque muy visual e interactivo a los usuarios, pues pueden ver resultados parciales y hacer pruebas en fragmentos aislados de código.
+El siguiente paso en el desarrollo de \textit{Ipython} sería lograr la persistencia absoluta de los datos, ya no solo mediante el uso de la \textit{historia} sino utilizando un sistema de \textit{notebooks}. En 1988, Steve Wolfram desarrolla \textit{Mathematica} \cite{math}, un programa para la computación matemática. Brian Hayes realiza una breve introducción en \cite{th-mathematica}. Este programa fué el primero en implementar este sistema de \textit{notebooks}, que sería utilizado por \textit{Ipython} más tarde. Los \textit{notebooks} son documentos con celdas que sirven como entrada. El usuario puede escribir código en ellas y ejecutarlas, lo que dará un resultado que se mostrará en la parte inferior de la celda, es decir, la salida. Este sistema propone un enfoque muy visual e interactivo a los usuarios, pues pueden ver resultados parciales y hacer pruebas en fragmentos aislados de código. También es posible añadir texto explicativo del propósito del código e, incluso, explicando los resultados que se van obteniendo, porporcionando un verdadero documento vivo, muy útil en entornos de experimentación, como análisis de datos, o entornos formativos, por citar solo dos.
 
 \textit{Ipython} había conseguido crear una plataforma interactiva para \textit{Python}, y se dieron cuenta de que ésta podia ser trasladada a más lenguajes. Fué entonces cuando se produjo\textit{ The big split} \footnote{https://blog.jupyter.org/the-big-split-9d7b88a031a7} (La gran partición) y nació \textit{Jupyter} \cite{jupyter-nb}. \textit{Jupyter} permitía la inclusión de nuevos lenguajes de programación en el \textit{frontend} de tipo \textit{notebook} que se había desarrollado. La tarea realizada para lograr ésto fué la de desacoplar el código de ejecución de \textit{Python} del \textit{frontend}. Se creó un protocolo que utilizaba mensajería \textit{ZeroMQ} \footnote{http://zeromq.org/} y que servía como un canal genérico para comunicarse con cualquier proceso de ejecución de otro programa \cite{wire-protocol}. Estos ``procesos'' reciben el nombre de \textit{kernels}.
 
-Al igual que muchas de las \textit{shells} de lenguajes comentadas anteriormente, la de \textit{Python} hacía uso de un \textit{kernel} para la ejecución del código. Para la definición de \textit{kernel} nos podemos basar en la interprentación de Sandewall ``\textit{El kernel de un sistema de programación debe contener los siguientes programas: Un parser que transforma los programas del usuario a la representación interna. Un program-printer que realiza la operación contraria. Un intérprete para los programas en la representación interna y/o un compilador que transforma la estructura de datos interna en languaje máquina para ser computado}''\cite{Sandewall}. Por lo tanto, el \textit{kernel} deberá poder recibir la información, computarla y devolverla al programa principal.
+Al igual que muchas de las \textit{shells} de lenguajes comentadas anteriormente, la de \textit{Python} hacía uso de un \textit{kernel} para la ejecución del código. Para la definición de \textit{kernel} se puede seguir la interprentación de Sandewall ``\textit{El kernel de un sistema de programación debe contener los siguientes programas: Un parser que transforma los programas del usuario a la representación interna. Un program-printer que realiza la operación contraria. Un intérprete para los programas en la representación interna y/o un compilador que transforma la estructura de datos interna en languaje máquina para ser computado}''\cite{Sandewall}. Por lo tanto, el \textit{kernel} deberá poder recibir la información, computarla y devolverla al programa principal.
 
 De esta manera, cualquier programa que fuera capaz de recibir una entrada por medio del protocolo de \textit{Jupyter} y devolver una salida podía realizar la función de \textit{kernel}. Sin embargo, un \textit{kernel} que no mantenga el contexto entre las diferentes computaciones no sirve de mucho, pues no se podrá separar el código en celdas y que las variables mantengan sus valores. Al no poder separar el código, el concepto de \textit{notebook} pierde su sentido completamente, por lo que para que un \textit{kernel} sea útil debe mantener el contexto.
 
@@ -314,7 +318,7 @@ Una vez comentados todos estos puntos y componentes dentro de \textit{Jupyter}, 
 
 \end{itemize}
 
-Se han mostrado alternativas a la plataforma \textit{Jupyter}, pero lo que se pretende alcanzar en el desarrollo del proyecto es poder hacer un uso colaborativo permisionado de uno de estos sistemas. En este momento, ya existen plataformas que nos permiten estas funcionalidades: 
+Se han mostrado alternativas a la plataforma \textit{Jupyter}, pero lo que se pretende alcanzar en el desarrollo del proyecto es poder hacer un uso colaborativo de uno de estos sistemas. En este momento, ya existen plataformas que permiten estas funcionalidades: 
 
 \begin{itemize}
 
@@ -334,11 +338,18 @@ En conclusión, \textit{Jupyter} nace como una evolución lógica dentro de la p
 \section{Crítica al estado del arte}
 \label{sec:critica-estado}
 
-Tal y como hemos visto en el apartado anterior, existen plataformas que ya implementan entornos colaborativos utilizando el sistema de programación interactiva mediante \textit{notebooks}. 
+Tal y como se ha visto en el apartado anterior, existen plataformas que ya implementan entornos colaborativos utilizando el sistema de programación interactiva mediante \textit{notebooks}. 
 
 Estos entornos ofrecen un modelo de edición y ejecución no permisionado, basado en el concepto de que los usuarios interactuen libremente a lo largo de todo el documento. En un entorno de edición de texto ésto funciona perfectamente, como es el caso de \textit{Google Docs}, ya que, aunque se borre alguna parte del documento creada por otro usuario, no hay dudas sobre el estado del documento, pues lo que se ve es lo que se tiene. Cuando se traslada ese modelo de edición a un entorno de programación interactiva, pueden surgir problemas relacionados sobre todo con el contexto del \textit{kernel} en el que se está realizando la ejecución.
 
-Los \textit{kernels} de \textit{Jupyter} no siguen una ejecución coherente con el orden de celdas del \textit{notebook}, sino que funcionan siguiendo el orden de ejecución que dicta el usuario, o, en este caso, los usuarios. Al mandar una celda a ejecución, ésta se ejecuta en base al contexto del \textit{kernel} en ese momento. Si un usuario ha realizado una ejecución a destiempo, puede alterar el contexto que esperaba otro usuario, modificando el resultado de su computación. 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{exec-jupy.png}
+  \caption{Detalle sobre el modelo de ejecución de \textit{Jupyter}}
+  \label{fig:ex-jup}
+\end{figure}
+
+Es el caso de los \textit{kernels} de \textit{Jupyter}, pues no siguen una ejecución coherente con el orden de celdas del \textit{notebook}, sino que funcionan siguiendo el orden de ejecución que dicta el usuario, o, en este caso, los usuarios. Al mandar una celda a ejecución, ésta se ejecuta en base al contexto del \textit{kernel} en ese momento. Se puede ver un ejemplo en la figura \ref{fig:ex-jup}, donde, siguiendo un orden secuencial empezando por la primera celda, el resultado de la segunda, ``\textit{k+k}'', debería ser 6. Sin embargo, al haberse ejecutado previamente la tercera celda, se altera el contexto, obteniendo 10 como resultado. Si en una sesión con dos usuarios cocurrentes uno realiza una ejecución a destiempo, puede alterar el contexto que esperaba otro usuario, modificando el resultado de su computación. 
 
 Como el contexto del \textit{kernel} es oculto para los usuarios, la resolución de problemas es muy poco intuitiva, pues no se tiene porqué saber donde se encuentra el error. Esto puede resultar en una interacción tosca y compleja entre los usuarios y la plataforma.
 
@@ -350,7 +361,7 @@ Como el contexto del \textit{kernel} es oculto para los usuarios, la resolución
 
 Para resolver los problemas que se plantean en la sección \ref{sec:critica-estado}, se tiene que seguir un modelo de edición y ejecución más restrictivo. En este proyecto se ha planteado una modelo permisionado que solo permite la edición del documento por un usuario a la vez. La colaboración se consigue pasando los permisos de modificación entre los diferentes usuarios. De esta manera, se consigue una ejecución secuencial de las celdas, y todos los usuarios conocen el estado del \textit{notebook} en todo momento, pues sólo uno está realizando cambios mientras el resto los observa en tiempo real.
 
-En el caso de querer realizar una modificación del documento concurrente por dos o más usuarios habría que encontrar la manera de que éstos conocieran el contexto en el que su código va a ser ejecutado. También deberían ser avisados de los cambios realizados por el resto de usuarios así como de si éstos han modificado dicho contexto. De no cumplirse éstos puntos, nos encontraríamos ante el mismo problema mencionado anteriormente, en el que no se puede tener la certeza de qué resultado va a devolver cada ejecución.
+En el caso de querer realizar una modificación del documento concurrente por dos o más usuarios habría que encontrar la manera de que éstos conocieran el contexto en el que su código va a ser ejecutado. También deberían ser avisados de los cambios realizados por el resto de usuarios así como de si éstos han modificado dicho contexto. De no cumplirse éstos puntos, se encontraría el mismo problema mencionado anteriormente, en el que no se puede tener la certeza de qué resultado va a devolver cada ejecución.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -361,7 +372,7 @@ En el caso de querer realizar una modificación del documento concurrente por do
 \chapter{Análisis del problema}
 \label{ch:analisis-problema}
 
-Para conocer la dimensión del problema y poder realizar un análisis, tenemos que ahondar en la estructura interna de la plataforma que vamos a modificar, en este caso \textit{Jupyter}. De esta manera, vamos a entender qué componentes están realizando qué función, y podremos modificarlos de forma acorde a la solución que planteemos.
+Para conocer la dimensión del problema y poder realizar un análisis, se tiene que ahondar en la estructura interna de la plataforma que se va  a modificar, en este caso \textit{Jupyter}. De esta manera, se va a entender qué componentes están realizando qué función, y se podrán modificar de forma acorde a la solución que planteemos.
 
 
 % ESTRUCTURA DE JUPYTER
@@ -380,14 +391,14 @@ Para conocer la dimensión del problema y poder realizar un análisis, tenemos q
   \label{fig:components}
 \end{figure}
 
-La estructura básica de Jupyter la podemos encontrar en la figura \ref{fig:components}. En ella identificamos los tres elementos principales que componen la plataforma: El servidor de \textit{notebooks "Notebook server"}, el archivo \textit{notebook "Notebook File"} y el \textit{kernel}. 
+La estructura básica de Jupyter se puede encontrar en la figura \ref{fig:components}. En ella identificamos los tres elementos principales que componen la plataforma: el servidor de \textit{notebooks "Notebook server"}, el archivo \textit{notebook "Notebook File"} y el \textit{kernel}. 
 
 
 \subsubsection{Servidor de \textit{notebooks}}
 \label{subsec:estructura-servidor}
 
-Es el servicio desplegado cuando se inicia la aplicación. Accedemos a él a través de la conexión mediante un navegador. En este servidor podemos ver el directorio desde el cuál se ha lanzado el proceso y seleccionar cada uno de los archivos \textit{notebook} bien para visualizarlos y ejecutarlos o para realizar alguna otra acción como eliminarlos, renombrarlos, etc.
- También podemos ver en otra pestaña qué archivos están en ejecución, y detener su \textit{kernel} asociado.
+Es el servicio desplegado cuando se inicia la aplicación. Se accede a él a través de la conexión mediante un navegador. En este servidor se puede ver el directorio desde el cuál se ha lanzado el proceso y seleccionar cada uno de los archivos \textit{notebook} bien para visualizarlos y ejecutarlos o para realizar alguna otra acción como eliminarlos, renombrarlos, etc.
+ También se puede ver en otra pestaña qué archivos están en ejecución, y detener su \textit{kernel} asociado.
  
 Estructuralmente, el servidor de \textit{notebooks} es el proceso que sirve como nexo de unión entre el usuario y el \textit{notebook}, al que accederá y modificará. Implementa todas las conexiones entre el navegador y el \textit{notebook} (en este caso los \textit{\gls{handler}s} para las llamadas \textit{\gls{HTTP}}); así como las conexiones entre el \textit{notebook} y el \textit{kernel}, especificadas en la documentación de \textit{Jupyter}, más concretamente en \textit{The wire protocol} \cite{wire-protocol}, que utilizan la tecnología \textit{ZeroMQ}.
 
@@ -398,19 +409,19 @@ Estructuralmente, el servidor de \textit{notebooks} es el proceso que sirve como
   	\label{fig:tree}
 \end{figure}
 
-En la figura \ref{fig:tree} podemos ver una captura de la interfaz del servidor de \textit{notebooks}. Podemos identificar cada uno de los \textit{notebooks} en la lista, así como la pestaña \textit{running}, donde podríamos detener la ejecución de los \textit{kernels} en marcha.
+En la figura \ref{fig:tree} se puede ver una captura de la interfaz del servidor de \textit{notebooks}. De puede identificar cada uno de los \textit{notebooks} en la lista, así como la pestaña \textit{running}, donde de podría detener la ejecución de los \textit{kernels} en marcha.
 
 
 \subsubsection{Archivo \textit{notebook}}
 \label{subsec:estructura-notebook}
 
-Es el documento principal dentro de todo el ecosistema de \textit{Jupyter}. Toda la plataforma va enfocada a estos archivos, donde encontramos el código y los resultados de los mismos. El \textit{notebook} se divide en celdas, que son las unidades de ejecución, es decir, al ejecutar una celda, se ejecuta solamente el contenido de ésta. Las celdas se dividen en dos secciones, una para la entrada, donde el usuario introduce el código; y otra para la salida, donde, en el caso de que el código ejecutado en la celda tenga una salida disponible, se mostrará el resultado de la ejecución. 
+Es el documento principal dentro de todo el ecosistema de \textit{Jupyter}. Toda la plataforma va enfocada a estos archivos, donde se encuentra el código y los resultados de los mismos. El \textit{notebook} se divide en celdas, que son las unidades de ejecución, es decir, al ejecutar una celda, se ejecuta solamente el contenido de ésta. Las celdas se dividen en dos secciones, una para la entrada, donde el usuario introduce el código; y otra para la salida, donde, en el caso de que el código ejecutado en la celda tenga una salida disponible, se mostrará el resultado de la ejecución. 
 
-La función principal del \textit{notebook} es la persistencia, pues nos sirve para no perder el trabajo realizado, ya que al finalizar una sesión éste queda guardado en disco. Los \textit{notebooks} son internamente archivos \textit{JSON}, donde encontramos una \textit{\gls{array}} de celdas, con sus respectivas entradas y salidas, así como los metadatos del mismo \textit{notebook}.
+La función principal del \textit{notebook} es la persistencia, pues nos sirve para no perder el trabajo realizado, ya que al finalizar una sesión éste queda guardado en disco. Los \textit{notebooks} son internamente archivos \textit{JSON}, donde se encuentra una \textit{\gls{array}} de celdas, con sus respectivas entradas y salidas, así como los metadatos del mismo \textit{notebook}.
 
 La ejecución del notebook se realiza haciendo uso de los \textit{kernels}, y la explicaré más adelante, pues hace falta tener el concepto de \textit{kernel} dentro de la plataforma \textit{Jupyter} claro para entender su funcionamiento.
 
-En la figura \ref{fig:notebook} podemos ver un ejemplo de \textit{notebook}. En ella se pueden apreciar detalles, como la posibilidad de mostrar celdas formateadas en \textit{markdown} \footnote{https://es.wikipedia.org/wiki/Markdown}, o el uso de \textit{rich output}, como podemos ver en el gráfico de la parte inferior.
+En la figura \ref{fig:notebook} se puede ver un ejemplo de \textit{notebook}. En ella se pueden apreciar detalles, como la posibilidad de mostrar celdas formateadas en \textit{markdown} \footnote{https://es.wikipedia.org/wiki/Markdown}, o el uso de \textit{rich output}, como se puede ver en el gráfico de la parte inferior.
 
 
 \subsubsection{\textit{Kernel}}
@@ -441,15 +452,15 @@ Por otro lado, cuando el \textit{kernel} detecta que los restultados se pueden m
 \section{Formalización del problema}
 \label{sec:formalizacion}
 
-Tal y como se comentaba en la sección \ref{sec:objetivos}, la finalidad del proyecto es desarrollar un entorno que permita el uso colaborativo de \textit{Jupyter}. Para ello, tenemos que cumplir objetivos más pequeños y acotados, pues todos van a desempeñar un papel necesario para la funcionalidad de la plataforma obtenida. A continuación los expondré, segmentándolos en tareas y entrando en detalles de porqué son necesarios para el proyecto.
+Tal y como se comentaba en la sección \ref{sec:objetivos}, la finalidad del proyecto es desarrollar un entorno que permita el uso colaborativo de \textit{Jupyter}. Para ello, se tienen que cumplir objetivos más pequeños y acotados, pues todos van a desempeñar un papel necesario para la funcionalidad de la plataforma obtenida. A continuación se expondrán, segmentándolos en tareas y entrando en detalles de porqué son necesarios para el proyecto.
 
 \begin{itemize}
 
-\item \textbf{Permitir que los usuarios modifiquen y vean los cambios en los documentos en tiempo real}. El aspecto general a derivar de este objetivo es la sincronización. Necesitamos que las instancias de los documentos de los dos usuarios estén sincronizadas para cumplir este objetivo.
+\item \textbf{Permitir que los usuarios modifiquen y vean los cambios en los documentos en tiempo real}. El aspecto general a derivar de este objetivo es la sincronización. Se necesita que las instancias de los documentos de los dos usuarios estén sincronizadas para cumplir este objetivo.
 
-\item \textbf{Gestionar los usuarios, sus permisos y sus sesiones}. Para ello vamos a necesitar un mecanismo de autenticación y autorización, así como un sistema de gestión de usuarios, para poder darlos de alta en la plataforma e identificarlos.
+\item \textbf{Gestionar los usuarios, sus permisos y sus sesiones}. Para ello se va a necesitar un mecanismo de autenticación y autorización, así como un sistema de gestión de usuarios, para poder darlos de alta en la plataforma e identificarlos.
 
-\item \textbf{Gestionar los \textit{notebooks} y el acceso de los usuarios a éstos}. Vamos a necesitar una gestión de los \textit{notebooks}, así como hacer uso de la autorización previamente comentada para decidir si un unuasrio puede acceder o no a el \textit{notebook} en cuestión.
+\item \textbf{Gestionar los \textit{notebooks} y el acceso de los usuarios a éstos}. Se va a necesitar una gestión de los \textit{notebooks}, así como hacer uso de la autorización previamente comentada para decidir si un usuario puede acceder o no al \textit{notebook} en cuestión.
 
 \item \textbf{Soporte de colaboración en distintas sesiones de trabajo}. Para soportar este objetivo va a hacer falta una capa de persistencia para mantener los datos necesarios.
 \end{itemize}
@@ -457,7 +468,7 @@ Tal y como se comentaba en la sección \ref{sec:objetivos}, la finalidad del pro
 Una vez se han visto los objetivos del proyecto y se han relacionado con tareas más concretas y abordables, se formalizan estas tareas y lo que se pretende conseguir con cada una de ellas. Serán los puntos a solucionar en la sección \ref{sec:ident-soluciones}:
 
 \begin{itemize}
-\item \textbf{Sincronización}. La sincronización es un aspecto fundamental para una herramienta colaborativa. Nos permite conocer el estado del documento, así como los cambios producidos por otros usuarios. 
+\item \textbf{Sincronización}. La sincronización es un aspecto fundamental para una herramienta colaborativa. Permite conocer el estado del documento, así como los cambios producidos por otros usuarios. 
 
 
 \item \textbf{Autenticación, autorización e identificación}. Es necesario diseñar un sistema para ver quién está modificando los documentos y si tiene permisos para hacerlo, así como asegurarse de que no pueda hacerlo si no los tiene. Una vez identificados los usuarios, se puede saber con quién se está colaborando.
@@ -474,23 +485,41 @@ Una vez se han visto los objetivos del proyecto y se han relacionado con tareas 
 \section{Análisis de la seguridad}
 \label{sec:analisis-seguridad}
 
-Para garantizar a los usuarios que sus documentos no pueden ser vistos por personas no autorizadas, se ha de crear un modelo de seguridad en la plataforma. Éste debería estar muy relacionado con la autenticación y la persistencia, pues queremos comprobar y asegurarnos de que cada usuario pertenece a solamente una persona y de que estos usuarios van a ser guardados y persistidos para conexiones futuras.
+Para garantizar a los usuarios que sus documentos no pueden ser vistos por personas no autorizadas, se ha de crear un modelo de seguridad en la plataforma. Éste debería estar muy relacionado con la autenticación y la persistencia, pues se quiere comprobar y asegurar que cada usuario pertenece a solamente una persona y de que estos usuarios van a ser guardados y persistidos para conexiones futuras.
 
-\textit{Jupyter} implementa de base un sistema de seguridad, en el que se pueden proteger los servidores de \textit{notebooks} con una contraseña. Cualquier persona que conozca esta contraseña puede entrar al servidor. Este sistema no es suficiente para nuestras especificaciones, porque no identifica al usuario. No podemos saber quién se ha conectado y, por lo tanto, no le podemos aplicar su configuración y permisos.
+\textit{Jupyter} implementa de base un sistema de seguridad, en el que se pueden proteger los servidores de \textit{notebooks} con una contraseña. Cualquier persona que conozca esta contraseña puede entrar al servidor. Este sistema no es suficiente para las especificaciones propuestas, porque no identifica al usuario. Se piensa en un servicio \textit{multi-tenant} en la nube compartiendo recursos computacionales, por lo tanto diferentes usuarios se van a conectar a la misma instancia del servidor. Se debe conocer qué usuario se está conectando en cada momento para poder servirle su configuración específica. Si se utilizara una instancia del servidor para cada usuario conectado se podría mantener el sistema propio de \textit{Jupyter}, pues no habría duda de quién se conecta, ya que sólo el dueño de la instancia tendría acceso a la contraseña.
 
+
+% CASOS DE USO
+
+\section{Casos de uso}
+\label{sec:casos-uso}
+
+\begin{figure}[H]
+	\centering
+  	\includegraphics[width=\linewidth]{UML.png}
+  	\caption{Diagrama UML sobre los casos de uso}
+  	\label{fig:UML}
+\end{figure}
+
+La figura \ref{fig:UML} nos muestra un diagrama UML \footnote{https://es.wikipedia.org/wiki/Lenguaje\_unificado\_de\_modelado} sobre las diferentes acciones que se deberían poder realizar en el sistema a desarrollar. Se puede apreciar una distinción clara entre el servidor de \textit{notebooks} y el archivo \textit{notebook}, pues cada caja representa las acciones a realizar en el respectivo lugar. Las lineas continuas indican la potestad de un actor para realizar una acción y las discontinuas un cambio en el estado o rol de un actor, resultado de cierta acción ejecutada.
+
+Un agente anónimo sólo tiene la posibilidad de registrarse en la plataforma. Una vez registrado se convierte en un usuario, el cual puede seleccionar un \textit{notebook}, del cual forme parte previamente, o bien crear un \textit{notebook} nuevo. En el caso de crear un \textit{notebook}, el usuario adquiriría el rol de Administrador-editor, únicamente para el \textit{notebook} creado. Por el contrario, en caso de seleccionar un \textit{notebook}, se asignaría al usuario el rol que tiene en el \textit{notebook} seleccionado, que puede ser cualquiera. Dentro del servidor de \textit{notebooks}, un usuario con permisos de administración sobre un \textit{notebook} podría renombrarlo y borrarlo.
+
+Para que un usuario pueda acceder a un archivo \textit{notebook}, este usuario tiene que formar parte de él. Ésto se podría conseguir de dos formas, bien siendo el propio usuario el creador del archivo, o habiendo sido invitado a él. En el caso de ser el creador del archivo, recibiría el rol de Administrador-editor en un primer lugar, lo que le permitiría realizar modificaciones sobre el archivo, así como visualizarlo y gestionarlo. Dentro de la gestión encontraría dos opciones no realizables desde el servidor, la opción de compartir y la de asignar editor. Al compartir el archivo, el receptor de esta invitación entraría al documento como Espectador, permitiéndole la visualización del archivo. El Administrador-editor podría entonces asignar permisos de edición a cualquier usuario perteneciente al notebook, delegando la edición en él y convirtiéndose en Administrador. Es este el motivo por el cual la opción de asignar editor tiene impacto en todos los roles.
 
 % IDENTIFICACIÓN Y ANÁLISIS DE SOLUCIONES POSIBLES
 
 \section{Identificación y análisis de soluciones posibles}
 \label{sec:ident-soluciones}
 
-De la misma manera que hemos planteado y formalizado los problemas que tenemos que atacar durante la realización del proyecto, vamos a identificar y analizar las posibles soluciones para cada uno de ellos. 
+De la misma manera que se ha planteado y formalizado los problemas que se tienen que atacar durante la realización del proyecto, se va a identificar y analizar las posibles soluciones para cada uno de ellos. 
 
 
 \subsection{Sincronización}
 \label{subsec:sincro}
 
-Para solucionar el problema de la sincronización se planteó, en una primera instancia, una sincronización por mensajería. Para ello, se haría uso de un componente llamado \textit{Connection Bridge}, que se encargaría de las conexiones entre el \textit{kernel} y los \textit{notebooks}, interceptando tanto los mensajes provenientes del \textit{notebook} que se está modificando, para mandarlos a las otras instancias y actualizarlas como los mensajes provenientes del \textit{kernel}, para que las salidas, o \textit{outputs}, se propaguen a todas las instancias de \textit{notebooks} conectadas. Podemos ver un esquema de su funcionamiento en la Figura \ref{fig:cb-scheme}.
+Para solucionar el problema de la sincronización se planteó, en una primera instancia, una sincronización por mensajería. Para ello, se haría uso de un componente llamado \textit{Connection Bridge}, que se encargaría de las conexiones entre el \textit{kernel} y los \textit{notebooks}, interceptando tanto los mensajes provenientes del \textit{notebook} que se está modificando, para mandarlos a las otras instancias y actualizarlas como los mensajes provenientes del \textit{kernel}, para que las salidas, o \textit{outputs}, se propaguen a todas las instancias de \textit{notebooks} conectadas. Se puede ver un esquema de su funcionamiento en la Figura \ref{fig:cb-scheme}.
 
 \begin{figure}[h]
 	\centering
@@ -503,7 +532,7 @@ Esta manera de sincronizar los estados de los \textit{notebooks} depende íntegr
 
 Con este modelo, la versión del \textit{notebook} que se está modificando, es decir, la del usuario con permisos de edición, será la que se persista en disco. Esa versión es la original, y no podemos asegurar que las instancias de los espectadores sean consistentes con ella. Si todos los mensajes se han mandado y recibido bien y el \textit{Connection Bridge} ha funcionado sin errores, los dos \textit{notebooks} deberían ser idénticos, pero en cuanto se produzca un error no podremos estar seguros de ello.
 
-Por otro lado, planteamos otra manera de realizar la sincronización, esta vez sin hacer uso de componentes externos. Este nuevo modelo se basa en programar que, tanto el \textit{notebook} que se está modificando como aquellos que se estén editando, se guarden o carguen con una frecuencia concreta desde disco. El hecho de realizar la sincronización de esta manera nos ofrece la ventaja de no tener que preocuparnos por las inconsistencias que podían surgir con la utilización del \textit{Connection Bridge}. Al cargar el archivo desde el disco, tenemos la certeza de que va a ser consistente. Podemos ver el esquema de este modelo en la Figura \ref{fig:disk-scheme}.
+Por otro lado, se plantea otra manera de realizar la sincronización, esta vez sin hacer uso de componentes externos. Este nuevo modelo se basa en programar que, tanto el \textit{notebook} que se está modificando como aquellos que se estén editando, se guarden o carguen con una frecuencia concreta desde disco. El hecho de realizar la sincronización de esta manera ofrece la ventaja de no tenerse que preocupar por las inconsistencias que podían surgir con la utilización del \textit{Connection Bridge}. Al cargar el archivo desde el disco, se tiene la certeza de que va a ser consistente. Se puede ver el esquema de este modelo en la Figura \ref{fig:disk-scheme}.
 
 \begin{figure}[h]
 	\centering
@@ -520,7 +549,7 @@ En cuanto a la identificación, se necesita un nombre público para que los usua
 
 Por otro lado, para los permisos si que se han planteado diversos modelos, desde algunos con grandes libertades para todos los usuarios y basados en la confianza hasta modelos bastante restrictivos donde la autorización para realizar las acciones está muy medida.
 
-El modelo que más hemos estudiado es un sistema de roles, de manera que cada usuario tiene un rol en cada \textit{notebook} en el que participa. Existen cuarto roles en el sistema planteado, los cuales voy a explicar brevemente.
+El modelo que se va a utilizar es un sistema de roles, de manera que cada usuario tiene un rol en cada \textit{notebook} en el que participa. Existen cuatro roles en el sistema planteado, los cuales se van a explicar brevemente.
 
 \begin{itemize}
 
@@ -538,17 +567,17 @@ En la solución final elegida, sólo puede haber un administrador y un editor a 
 
 Por último, para la autenticación se disponía de un gran abanico de opciones, desde algunas poco robustas, como mantener la contraseña de servidor que implementa \textit{Jupyter} hasta otras como crear nuestro propio sistema de autenticación.
 
-Se planteó hacer uso del sistema clásico de autenticación mediante usuario y contraseña, almacenando la contraseña \textit{\gls{hash}eada} en la base de datos. Este modelo es suficientemente robusto para nuestro sistema, y puede ser una buena opción para solucionar el problema de la seguridad.
+Se planteó hacer uso del sistema clásico de autenticación mediante usuario y contraseña, almacenando la contraseña \textit{\gls{hash}eada} en la base de datos. Este modelo es suficientemente robusto para el sistema a desarrollar, y puede ser una buena opción para solucionar el problema de la seguridad.
 
-Por otro lado, se valoró hacer uso de una autenticación mediante terceros, haciendo uso de la tecnología \textit{OAuth} \footnote{https://oauth.net/}. Esta opción nos permite autenticar al usuario a través de otras plataformas, lo cual es una ventaja, pues no tienen que crear una cuenta explícitamente para nuestra aplicación. Estas plataformas nos facilitarán la información necesaria para identificar al usuario en nuestra aplicación.
+Por otro lado, se valoró hacer uso de una autenticación mediante terceros, haciendo uso de la tecnología \textit{OAuth} \footnote{https://oauth.net/}. Esta opción permite autenticar al usuario a través de otras plataformas, lo cual es una ventaja, pues no tienen que crear una cuenta explícitamente para nuestra aplicación. Estas plataformas facilitarán la información necesaria para identificar al usuario en nuestra aplicación.
 
 
 \subsection{Gestión de \textit{notebooks}}
 \label{subsec:comparticion}
 
-En lo que concierne a la gestión de los \textit{notebooks}, se discutieron varias soluciones. Al igual que con la autorización, se puede optar por sistemas más o menos restrictivos a la hora de compartir los \textit{notebooks}, desde que todos los usuarios puedan acceder a todos los documentos hasta que tengan que ser invitados para acceder a cada uno de ellos.
+En lo que concierne a la gestión de los \textit{notebooks}, se discutieron varias soluciones. Al igual que con la autorización, se puede optar por sistemas más o menos restrictivos a la hora de compartir los \textit{notebooks}, desde que todos los usuarios puedan acceder a todos los documentos hasta que tengan que ser invitados para acceder a cada uno de ellos, tal y como se indica en la crítica al estado del arte, sección \ref{sec:critica-estado}.
 
-Esta última opción ha sido la elegida para nuestro proyecto, pues se quiere poder mantener una privacidad dentro de la plataforma, y que solamente accedan a los documentos aquellos usuarios que han sido autorizados a ello.
+Esta última opción ha sido la elegida para el proyecto a desarrollar, pues se quiere poder mantener una privacidad dentro de la plataforma, y que solamente accedan a los documentos aquellos usuarios que han sido autorizados a ello.
 
 Para acceder a un documento, un usuario tiene que ser invitado por un administrador, en este caso entrará como espectador al documento en cuestión; o bien puede crear un documento nuevo, en el cuál será el único usuario, y, por tanto, el Administrador-editor.
 
@@ -564,11 +593,11 @@ Para la persistencia, desde el principio se planteó hacer uso de una base de da
 \section{Solución propuesta}
 \label{sec:solucion-propuesta}
 
-En la sección anterior hemos detallado las posibles soluciones para cada uno de los problemas planteados. En este punto comentaremos cuáles han sido los elegidos para llevar a cabo en el desarrollo del proyecto.
+En la sección anterior se han detallado las posibles soluciones para cada uno de los problemas planteados. En este punto se comentarán cuáles han sido los elegidos para llevar a cabo en el desarrollo del proyecto.
 
 \begin{itemize}
 
-\item \textbf{Sincronización}: Se ha optado por el sistema de sincronización de guardado y cargado de archivos desde disco. Podemos ver su esquema en la figura \ref{fig:disk-scheme}. 
+\item \textbf{Sincronización}: Se ha optado por el sistema de sincronización de guardado y cargado de archivos desde disco. Se puede ver su esquema en la figura \ref{fig:disk-scheme}. 
 
 \item \textbf{Autenticación, autorización e identificación}: Se ha elegido un sistema de identificación mediante un nombre de usuario público, un sistema de autorización que asigna un rol por usuario para cada \textit{notebook} y un sistema de autenticación basado en terceros, haciendo uso de la tecnología \textit{OAuth}.
 
@@ -588,7 +617,7 @@ En la sección anterior hemos detallado las posibles soluciones para cada uno de
 \chapter{Diseño de la solución}
 \label{ch:diseno-solu}
 
-Tomando como punto de partida las diferentes soluciones elegidas en el capítulo anterior, se ha llevado a cabo su diseño. Este diseño de los diferentes componentes que formarán la aplicación final pasa por dos fases. La primera será un diseño general, entender el sistema como un todo y viendo qué papel desempeña cada uno de los componentes dentro de éste. Trataremos este asunto en la sección \ref{sec:arquitectura-sistema} \textit{Arquitectura del sistema}. Por otro lado, habrá que profundizar en cada uno de estos componentes, haciendo un estudio específico y detallado de todos ellos, aspectos que veremos en la sección \ref{sec:diseno-detallado} \textit{Diseño detallado}. Para finalizar el capítulo, se hablará de las tecnologías utilizadas a lo largo de todo el proyecto, más concretamente en cada uno de los componentes.
+Tomando como punto de partida las diferentes soluciones elegidas en el capítulo anterior, se ha llevado a cabo su diseño. Este diseño de los diferentes componentes que formarán la aplicación final pasa por dos fases. La primera será un diseño general, entender el sistema como un todo y viendo qué papel desempeña cada uno de los componentes dentro de éste. Se tratará este asunto en la sección \ref{sec:arquitectura-sistema} \textit{Arquitectura del sistema}. Por otro lado, habrá que profundizar en cada uno de estos componentes, haciendo un estudio específico y detallado de todos ellos, aspectos que veremos en la sección \ref{sec:diseno-detallado} \textit{Diseño detallado}. Para finalizar el capítulo, se hablará de las tecnologías utilizadas a lo largo de todo el proyecto, más concretamente en cada uno de los componentes.
 
 
 % ARQUITECTURA DEL SISTEMA
@@ -605,7 +634,7 @@ Tomando como punto de partida las diferentes soluciones elegidas en el capítulo
 
 La arquitectura de nuestro sistema toma como base la arquitectura propia de \textit{Jupyter}, dónde la pieza principal, que sirve como nexo de unión es el servidor de \textit{notebooks}. A esta pieza se conectaban, originalmente, y como muestra la Figura \ref{fig:components}: el navegador, los \textit{notebooks} (tanto para su carga y guardado en disco como para el hecho de mantenerlos en memoria una vez estaban abiertos) y por último, los \textit{kernels}.
 
-Aparte de todos estos componentes ya nombrados, que se mantienen en el sistema final, pues se encargan de las funcionalidades indispensables de Jupyter, se van a añadir dos componentes más, que van a ser la base de datos y el sistema de autenticación. Podemos ver un esquema de la arquitectura final del sistema en la Figura \ref{fig:general-arch}.
+Aparte de todos estos componentes ya nombrados, que se mantienen en el sistema final, pues se encargan de las funcionalidades indispensables de Jupyter, se van a añadir dos componentes más, que van a ser la base de datos y el sistema de autenticación. Se puede ver un esquema de la arquitectura final del sistema en la Figura \ref{fig:general-arch}.
 
 En cuanto a las conexiones, se mantienen los protocolos utilizados originalmente, como eran \textit{HTTP} entre el navegador y el Servidor de \textit{notebooks} y \textit{ZeroMQ} entre entre el Servidor de \textit{notebooks} y el \textit{kernel}. 
 
@@ -619,19 +648,19 @@ Los diferentes procesos se han marcado con lineas discontinuas en la figura \ref
 \section{Diseño detallado}
 \label{sec:diseno-detallado}
 
-Una vez vista la arquitectura a nivel general que tendrá la plataforma, pasamos a ver cómo estan diseñados a nivel interno cada uno de los componentes previamente mostrados. Explicaremos  el diseño la base de datos y el sistema de autenticación, ya que, a nivel de diseño, el resto de componentes se mantienen prácticamente iguales a como lo eran en el \textit{Jupyter} original. Del funcionamiento de la herramienta resultante de nuestro proyecto hablaremos en el capítulo \ref{ch:desarrollo-solucion} \textit{Desarrollo de la solución propuesta}.
+Una vez vista la arquitectura a nivel general que tendrá la plataforma, se pasa a ver cómo estan diseñados a nivel interno cada uno de los componentes previamente mostrados. Explicaremos  el diseño la base de datos y el sistema de autenticación, ya que, a nivel de diseño, el resto de componentes se mantienen prácticamente iguales a como lo eran en el \textit{Jupyter} original. Del funcionamiento de la herramienta resultante del proyecto desarrollado se hablará en el capítulo \ref{ch:desarrollo-solucion} \textit{Desarrollo de la solución propuesta}.
 
 
 \subsection{Base de datos}
 \label{subsec:diseno-bd}
 
-Tal y como hemos explicado en el apartado anterior, la base de datos funciona como un proceso externo al servidor de \textit{notebooks}. Ésto quiere decir que para poder acceder a ella hay que lanzar el servicio. De esta manera el servidor de notebooks puede hacer peticiones al servidor de la base de datos, el cual se encargará de realizar las consultas y devolver la información que ha sido solicitada. 
+Tal y como se ha explicado en el apartado anterior, la base de datos funciona como un proceso externo al servidor de \textit{notebooks}. Ésto quiere decir que para poder acceder a ella hay que lanzar el servicio. De esta manera el servidor de notebooks puede hacer peticiones al servidor de la base de datos, el cual se encargará de realizar las consultas y devolver la información que ha sido solicitada. 
 
-Desde el punto de vista del diseño de la arquitectura, se podría haber eliminado el servidor de la base de datos, haciendo que fuera directamente el servidor de \textit{notebooks} el que realizara las consultas. La ventaja de desacoplar el componente es que se puede acceder a la base de datos sin necesidad de hacerlo desde el servidor de \textit{notebooks}, es decir, podemos hacer uso de la base de datos desde fuera de \textit{Jupyter}, o tener más de una aplicación haciendo peticiones simultáneamente. 
+Desde el punto de vista del diseño de la arquitectura, se podría haber eliminado el servidor de la base de datos, haciendo que fuera directamente el servidor de \textit{notebooks} el que realizara las consultas. La ventaja de desacoplar el componente es que se puede acceder a la base de datos sin necesidad de hacerlo desde el servidor de \textit{notebooks}, es decir, se puede hacer uso de la base de datos desde fuera de \textit{Jupyter}, o tener más de una aplicación haciendo peticiones simultáneamente. 
 
 Su implementación es bastante sencilla, haciendo uso de la herramienta \textit{Tornado}  \footnote{http://www.tornadoweb.org/en/stable/} para gestionar los \textit{handlers} que se encargan de las peticiones. Por otro lado se utiliza \textit{SQLite}\footnote{https://www.sqlite.org/index.html} , que es el motor de la base de datos y la herramienta desde la cual se accede, consulta y modifica. 
 
-En lo que respecta a la organización de la información en la base de datos, podemos ver un esquema de las tablas y columnas en la Figura \ref{fig:db-scheme}. 
+En lo que respecta a la organización de la información en la base de datos, se puede ver un esquema de las tablas y columnas en la Figura \ref{fig:db-scheme}. 
 
 \begin{figure}[h]
 	\centering
@@ -640,7 +669,7 @@ En lo que respecta a la organización de la información en la base de datos, po
   	\label{fig:db-scheme}
 \end{figure}
 
-La base de datos está compuesta por dos tablas. En primer lugar la tabla \textit{Users}, donde podemos encontrar la información acerca de los usuarios registrados en la plataforma. Se compone de las siguientes columnas:
+La base de datos está compuesta por dos tablas. En primer lugar la tabla \textit{Users}, donde se puede encontrar la información acerca de los usuarios registrados en la plataforma. Se compone de las siguientes columnas:
 
 \begin{itemize}
 
@@ -656,7 +685,7 @@ La base de datos está compuesta por dos tablas. En primer lugar la tabla \texti
 
 \end{itemize}
 
-En segundo lugar, encontramos la tabla \textit{notebooks}, que muestra la información acerca de todos los archivos \textit{notebook} registrados en el servidor. Está compuesta por las colunas siguientes:
+En segundo lugar, se encuentra la tabla \textit{notebooks}, que muestra la información acerca de todos los archivos \textit{notebook} registrados en el servidor. Está compuesta por las colunas siguientes:
 
 \begin{itemize}
 
@@ -672,9 +701,9 @@ En segundo lugar, encontramos la tabla \textit{notebooks}, que muestra la inform
 \subsection{Sistema de autenticación}
 \label{subsec:diseno-auth}
 
-Para llevar a cabo el sistema de autenticación se ha hecho uso de la plataforma \textit{auth0}, como he introducido previamente en la sección Arquitectura del sistema. A continuación la introduciré y explicaré su funcionamiento.
+Para llevar a cabo el sistema de autenticación se ha hecho uso de la plataforma \textit{auth0}, como se ha introducido previamente en la sección Arquitectura del sistema. A continuación se introducirá y explicará su funcionamiento.
 
-\textit{Auth0} es una plataforma de \textit{Authentication as a Service}. Sirve para autenticar a usuarios sin necesidad de implementar nuestro propio sistema, simplemente delegando esta tarea en ella. Para conectar nuestra aplicación con \textit{auth0} tenemos que programar una serie de redirecciones. Cuando aparece un usuario en nuestro sistema que no está identificado se le redirige a una dirección dentro del dominio de \textit{auth0}. Esta \textit{URL} está asociada a nuestra aplicación, de esta manera \textit{auth0} sabe que va a a autenticar al usuario para nuestra plataforma en concreto. Una vez aquí, el usuario tendrá diversas opciones para realizar el \textit{login}. Estas opciones se pueden seleccionar en la configuración de la aplicación en el menú de \textit{auth0}, y más adelante explicaremos cuáles hemos elegido. Una vez autenticado el usuario, se le devolverá de nuevo a nuestra aplicación, donde ya podrá funcionar con normalidad y acceder a sus documentos.
+\textit{Auth0} es una plataforma de \textit{Authentication as a Service}. Sirve para autenticar a usuarios sin necesidad de implementar nuestro propio sistema, simplemente delegando esta tarea en ella. Para conectar nuestra aplicación con \textit{auth0} se tienen que programar una serie de redirecciones. Cuando aparece un usuario en nuestro sistema que no está identificado se le redirige a una dirección dentro del dominio de \textit{auth0}. Esta \textit{URL} está asociada a nuestra aplicación, de esta manera \textit{auth0} sabe que va a a autenticar al usuario para nuestra plataforma en concreto. Una vez aquí, el usuario tendrá diversas opciones para realizar el \textit{login}. Estas opciones se pueden seleccionar en la configuración de la aplicación en el menú de \textit{auth0}, y más adelante se explicará cuáles hemos elegido. Una vez autenticado el usuario, se le devolverá de nuevo a nuestra aplicación, donde ya podrá funcionar con normalidad y acceder a sus documentos.
 
 \begin{figure}[h]
 	\centering
@@ -687,9 +716,9 @@ La comunicación interna para que esto sea posible se puede ver en la Figura \re
 
 El navegador se redirige a \textit{Auth0} para que el usuario se autentique (\textit{Paso 1}). \textit{Auth0} entonces solicita una autenticación al proveedor de identidad (\textit{Paso 2}). Después de verificar al usuario, pidiéndole que haga \textit{login} (\textit{Paso 3}), el proveedor de identidad le devuelve un código a a la \textit{URL} de \textit{\gls{callback}} de \textit{Auth0}. Al recibir el código, \textit{Auth0} lo cambiará por un \textit{token} de acceso haciendo una petición \textit{POST} a la \textit{URL} de \textit{token} del proveedor de identidad (\textit{paso 5}) y recibirá el \textit{token} de acceso en la \textit{URL} de \textit{callback} (\textit{paso 6}). Más tarde, otra secuencia de intercambio de \textit{tokens} sucederá entre \textit{Auth0} y el servidor de \textit{notebooks}, donde \textit{Auth0} mandará un código al servidor de \textit{notebooks} (\textit{paso 7}) y el servidor cambiará el código por el \textit{token} de identificación (\textit{pasos 8 y 9}).
 
-Este token de identificación será el que utilizemos en nuestra plataforma. Se trata de un \textit{JWT} que contiene la información sobre el usuario. Los \textit{tokens JWT} están compuestos por tres partes: Una cabezera (\textit{header}) donde aparece el algoritmo de encriptado; el contenido (\textit{payload}), de donde extraeremos la información que hemos solicitado sobre el usuario en cuestión y, por último, una firma (\textit{signature}), que se realiza utilizando la clave privada de aquél que envia el token, para verificar que proviene de donde dice provenir\footnote{https://jwt.io/introduction/}.
+Este token de identificación será el que se utilice en la plataforma a desarrollar. Se trata de un \textit{JWT} que contiene la información sobre el usuario. Los \textit{tokens JWT} están compuestos por tres partes: Una cabezera (\textit{header}) donde aparece el algoritmo de encriptado; el contenido (\textit{payload}), de donde extraeremos la información que se ha solicitado sobre el usuario en cuestión y, por último, una firma (\textit{signature}), que se realiza utilizando la clave privada de aquél que envia el token, para verificar que proviene de donde dice provenir\footnote{https://jwt.io/introduction/}.
 
-Una vez desencriptado el token, podemos acceder a su contenido, y recuperar aquella información que sea útil conocer para nuestra plataforma. Concretamente, nos interesa recuperar la siguiente información, que ya hemos introducido en la subsección anterior cuando hablábamos de la tabla \textit{Users} en la base de datos:
+Una vez desencriptado el token, se puede acceder a su contenido, y recuperar aquella información que sea útil conocer para nuestra plataforma. Concretamente, nos interesa recuperar la siguiente información, que ya se ha introducido en la subsección anterior cuando se hablaba de la tabla \textit{Users} en la base de datos:
 
 \begin{itemize}
 
@@ -703,7 +732,7 @@ Una vez desencriptado el token, podemos acceder a su contenido, y recuperar aque
 
 \end{itemize}
 
-El diagrama de flujo que vemos en la Figura \ref{fig:auth0-scheme} corresponde a la secuencia de acciones llevadas a cabo en el caso de que el usuario se identifique con la aplicación de un tercero (el proveedor de identidad). \textit{Auth0} permite la identificación de esta manera mediante muchas plataformas, como es el caso de \textit{Google}, \textit{Github}, \textit{Linkedin}, etc \footnote{https://auth0.com/docs/connections}. Sin embargo, también ofrece la posibilidad de utilizar al propio \textit{Auth0} como proveedor de identidad. En este caso, el usuario se registra con un correo y contraseña, así como el \textit{nickname} que quiera, para ser identificado por el resto de usuarios dentro de nuestra plataforma. De esta manera, no se necesita llamar a un tercero, los pasos 2, 4, 5 y 6 vistos en el diagrama de la figura \ref{fig:auth0-scheme} se omitirían, y del paso 3 se encargaría el propio \textit{Auth0}. El esquema resultante sería el de la Figura \ref{fig:auth0-scheme-2}.  
+El diagrama de flujo que se ve en la Figura \ref{fig:auth0-scheme} corresponde a la secuencia de acciones llevadas a cabo en el caso de que el usuario se identifique con la aplicación de un tercero (el proveedor de identidad). \textit{Auth0} permite la identificación de esta manera mediante muchas plataformas, como es el caso de \textit{Google}, \textit{Github}, \textit{Linkedin}, etc \footnote{https://auth0.com/docs/connections}. Sin embargo, también ofrece la posibilidad de utilizar al propio \textit{Auth0} como proveedor de identidad. En este caso, el usuario se registra con un correo y contraseña, así como el \textit{nickname} que quiera, para ser identificado por el resto de usuarios dentro de nuestra plataforma. De esta manera, no se necesita llamar a un tercero, los pasos 2, 4, 5 y 6 vistos en el diagrama de la figura \ref{fig:auth0-scheme} se omitirían, y del paso 3 se encargaría el propio \textit{Auth0}. El esquema resultante sería el de la Figura \ref{fig:auth0-scheme-2}.  
 
 \begin{figure}[h]
 	\centering
@@ -712,7 +741,7 @@ El diagrama de flujo que vemos en la Figura \ref{fig:auth0-scheme} corresponde a
   	\label{fig:auth0-scheme-2}
 \end{figure}
 
-Para nuestro sistema hemos optado por ofrecer tanto la autenticación por terceros utilizando \textit{OAuth} así como la posibilidad de entrar en la plataforma mediante un correo electrónico y contraseña, que será guardado directamente en el dominio de \textit{auth0}. En la figura \ref{fig:login} podemos ver la interfaz del \textit{login} de \textit{auth0} para nuestra plataforma, donde se muestran las dos opciones previamente comentadas.
+Para el sistema a desarrollar se ha optado por ofrecer tanto la autenticación por terceros utilizando \textit{OAuth} así como la posibilidad de entrar en la plataforma mediante un correo electrónico y contraseña, que será guardado directamente en el dominio de \textit{auth0}. En la figura \ref{fig:login} se puede ver la interfaz del \textit{login} de \textit{auth0} para nuestra plataforma, donde se muestran las dos opciones previamente comentadas.
 
 \begin{figure}[H]
 	\centering
@@ -727,19 +756,19 @@ Para nuestro sistema hemos optado por ofrecer tanto la autenticación por tercer
 \section{Tecnología utilizada}
 \label{sec:tecno-utilizada}
 
-Hemos utilizado diversas herramientas y tecnologías a lo largo del desarrollo del proyecto. Hemos ido introduciendo muchas de ellas en lo que llevamos de memoria, en los puntos en los que resultaba relevante mencionarlas. Por lo tanto, esta sección servirá como un pequeño glosario donde se pueden encontrar todas las herramientas utilizadas sin entrar en grandes detalles sobre su funcionamiento. Estará estructurada por componentes, los vistos en la Figura \ref{fig:general-arch}, siendo cada uno una subsección de este punto.
+Se ha utilizado diversas herramientas y tecnologías a lo largo del desarrollo del proyecto. se han ido introduciendo muchas de ellas en el transcurso de la memoria, en los puntos en los que resultaba relevante mencionarlas. Por lo tanto, esta sección servirá como un pequeño glosario donde se pueden encontrar todas las herramientas utilizadas sin entrar en grandes detalles sobre su funcionamiento. Estará estructurada por componentes, los vistos en la Figura \ref{fig:general-arch}, siendo cada uno una subsección de este punto.
 
 
 \subsection{Servidor de \textit{notebooks}}
 \label{subsec:tecno-server}
 
-El servidor de notebooks utiliza una gran variedad de tecnologías. El \textit{backend} está programado en \textit{Python}, haciendo uso de \textit{Tornado} para implementar los \textit{handlers} del servicio web. En cuanto al \textit{frontend}, hace uso de \textit{JavaScript} \footnote{https://www.javascript.com/} y de \textit{HTML} \footnote{https://es.wikipedia.org/wiki/HTML}. Los archivos \textit{notebook} que encontramos en el servidor, ya sea en disco o en memoria, son documentos \textit{JSON}, así que se hace uso de esta tecnología para la persistencia de la información. Por último, las conexiones con el resto de componentes se realizan en casi todos los casos por \textit{HTTP}, siendo el kernel una excepción, pues hace uso de \textit{ZeroMQ}. 
+El servidor de notebooks utiliza una gran variedad de tecnologías. El \textit{backend} está programado en \textit{Python}, haciendo uso de \textit{Tornado} para implementar los \textit{handlers} del servicio web. En cuanto al \textit{frontend}, hace uso de \textit{JavaScript} \footnote{https://www.javascript.com/} y de \textit{HTML} \footnote{https://es.wikipedia.org/wiki/HTML}. Los archivos \textit{notebook} que se encuentran en el servidor, ya sea en disco o en memoria, son documentos \textit{JSON}, así que se hace uso de esta tecnología para la persistencia de la información. Por último, las conexiones con el resto de componentes se realizan en casi todos los casos por \textit{HTTP}, siendo el kernel una excepción, pues hace uso de \textit{ZeroMQ}. 
 
 
 \subsection{\textit{Kernels}}
 \label{subsec:tecno-kernels}
 
-Como hemos comentado anteriormente, los \textit{kernels} hacen uso de \textit{ZeroMQ} para el intercambio de información mediante mensajería, tal y como está especificado en \textit{The wire protocol} \cite{wire-protocol}. No se ha desarrollado ningún \textit{kernel} para este trabajo, pero normalmente se programan en el lenguaje que implementan. Más información en la subsección \ref{subsec:estructura-kernel}.
+Como se ha comentado anteriormente, los \textit{kernels} hacen uso de \textit{ZeroMQ} para el intercambio de información mediante mensajería, tal y como está especificado en \textit{The wire protocol} \cite{wire-protocol}. No se ha desarrollado ningún \textit{kernel} para este trabajo, pero normalmente se programan en el lenguaje que implementan. Más información en la subsección \ref{subsec:estructura-kernel}.
 
 
 \subsection{Base de datos}
@@ -751,7 +780,7 @@ La base de datos utiliza la herramienta \textit{SQLite} para su gestión. Se ha 
 \subsection{Sistema de autenticación}
 \label{subsec:tecno-auth}
 
-Tal y como hemos expuesto en la subsección \ref{subsec:diseno-auth}, de la autenticación se encarga la herramienta \textit{Auth0}. Ésta hace uso de tecnologías como \textit{OAuth} para identificar al usuario mediante proveedores de identidad externos. También da la posibilidad de crear una cuenta en \textit{Auth0} y que sea la propia plataforma la que autentique al usuario. Ambas opciones están contempladas en nuestra aplicación.
+Tal y como se ha expuesto en la subsección \ref{subsec:diseno-auth}, de la autenticación se encarga la herramienta \textit{Auth0}. Auth0 posibilita el uso de múltiples modos de autenticación, integrándolos en un servicio basado en \textit{tokens} \textit{JWT}. Dentro de sus tecnologías disponibles se encuentra \textit{OAuth}, para identificar al usuario mediante proveedores de identidad externos. También se ofrece la posibilidad de crear una cuenta en \textit{Auth0} y que sea la propia plataforma la que autentique al usuario. Estas dos opciones son las elegidas y contempladas en nuestra aplicación.
 
 
 
@@ -763,7 +792,7 @@ Tal y como hemos expuesto en la subsección \ref{subsec:diseno-auth}, de la aute
 \chapter{Desarrollo de la solución propuesta}
 \label{ch:desarrollo-solucion}
 
-Una vez finalizado el diseño, se procede a la implementación de cada una de las partes o componentes especificados. Se procede de una manera escalonada durante el desarrollo del trabajo. En primer lugar se plantean los objetivos a cumplir, y tomando como base estos objetivos, se atacan uno por uno. Por lo tanto, se analiza el objetivo, se diseña su solución en concreto, se implementa y se prueba. En el momento en que el objetivo queda solucionado, se avanza al siguiente.
+Una vez finalizado el diseño, se procede a la implementación de cada una de las partes o componentes especificados. Se trabaja de una manera escalonada durante el desarrollo del trabajo. En primer lugar se plantean los objetivos a cumplir, y tomando como base estos objetivos, se atacan uno por uno. Por lo tanto, se analiza el objetivo, se diseña su solución en concreto, se implementa y se prueba. En el momento en que el objetivo queda solucionado, se avanza al siguiente.
 
 Se tomó como base para la implementación el repositorio de \textit{Github} de \textit{Jupyter notebook}, más concretamente su versión estable 5.5.0 \footnote{https://github.com/jupyter/notebook/releases/tag/5.5.0}. Debido al gran tamaño del repositorio, fué bastante costoso familiarizarse con él y descubrir qué archivos realizaban qué funciones. Además, hubo que aprender a utilizar las tecnologías que se empleaban en el repositorio, como por ejemplo \textit{Tornado}.
 
@@ -787,9 +816,9 @@ Surgió un problema con la carga de \textit{notebooks}, porque el método que la
 \section{Creación de un sistema de roles y permisos}
 \label{sec:desarrollo-roles}
 
-El desarrollo del sistema de roles va muy ligado al desarrollo de la base de datos. El sistema de roles hace muchas consultas para conocer el rol de cada usuario en cada momento, así como para realizar modificaciones en el caso de que sea necesario. 
+El desarrollo del sistema de roles depende en gran medida de la base de datos. El sistema de roles hace muchas consultas para conocer el rol de cada usuario en cada momento, así como para realizar modificaciones en el caso de que sea necesario. 
 
-Los roles se tienen que tener en cuenta en la aplicación principalmente en dos sitios. En primer lugar, en el ciclo de ejecución de los \textit{notebooks}. Como se ha comentado en la sección \ref{sec:desarrollo-sincro} sobre la sincronización, se hace uso de un intervalo para el guardado y la carga de los archivos. En este punto se tiene que comprobar el rol de cada usuario, para saber si cargará o guardará el archivo, así como actualizar un \textit{\gls{flag}} creado en la interfaz para que el usuario sepa qué rol tiene. En el caso de que el usuario tenga permisos de administración se le mostrará en un submenú sus acciones disponibles, como se muestra en la Figura \ref{fig:detalle-nb}. Por otro lado, es importante conocer el rol para saber si un usuario tiene potestad para realizar ciertas acciones sobre un notebook, como por ejemplo renombrarlo o eliminarlo. En estos casos, en el propio \textit{handler} de la petición, se pedirá a la base de datos que compruebe el rol del usuario, en el caso de no tener los permisos necesarios para realizarla, se enviará el código de estado \textit{HTTP} 401, usuario no autorizado. 
+Los roles se deben tener en cuenta en la aplicación principalmente en dos sitios. En primer lugar, en el ciclo de ejecución de los \textit{notebooks}. Como se ha comentado en la sección \ref{sec:desarrollo-sincro} sobre la sincronización, se hace uso de un intervalo para el guardado y la carga de los archivos. En este punto se tiene que comprobar el rol de cada usuario, para saber si cargará o guardará el archivo, así como actualizar un \textit{\gls{flag}} creado en la interfaz para que el usuario sepa qué rol tiene. En el caso de que el usuario tenga permisos de administración se le mostrará en un submenú sus acciones disponibles, como se muestra en la Figura \ref{fig:detalle-nb}. Por otro lado, es importante conocer el rol para saber si un usuario tiene potestad para realizar ciertas acciones sobre un notebook, como por ejemplo renombrarlo o eliminarlo. En estos casos, en el propio \textit{handler} de la petición, se pedirá a la base de datos que compruebe el rol del usuario, en el caso de no tener los permisos necesarios para realizarla, se enviará el código de estado \textit{HTTP} 401, usuario no autorizado. 
 
 \begin{figure}[H]
 	\centering
@@ -810,7 +839,7 @@ El usuario encargado de la administración de un \textit{notebook} puede delegar
 
 \end{itemize}
 
-El sistema de roles no puede funcionar sin la base de datos, porque se perdería toda la información cuando el servicio se cayera y se volviera a lanzar, ya que no se podría recordar qué usuario tiene qué rol en qué \textit{notebook}.
+El sistema de roles no puede funcionar sin la capa de persistencia, porque se perdería toda la información cuando el servicio se cayera y se volviera a lanzar, ya que no se podría recordar qué usuario tiene qué rol en qué \textit{notebook}.
 
 
 % PERSISTENCIA DE LA INFORMACIÓN NECESARIA
@@ -818,7 +847,7 @@ El sistema de roles no puede funcionar sin la base de datos, porque se perdería
 \section{Persistencia de la información necesaria}
 \label{sec:desarrollo-persistencia}
 
-La persistencia se llevó a cabo mediante una base de datos, cuyo diseño se ha introducido en la subsección \ref{subsec:diseno-bd}. Para su desarrollo se utilizó la herramienta \textit{SQLite}, la cuál permitió realizar una implementación sencilla y robusta. 
+La persistencia se llevó a cabo mediante una base de datos, cuyo diseño se ha introducido en la subsección \ref{subsec:diseno-bd}. Para su desarrollo se utilizó la herramienta \textit{SQLite}. Ésta permitió realizar una implementación sencilla y robusta. 
 
 En un primer momento, la base de datos se accedía directamente desde el servidor de \textit{notebooks}, habiendo importado la herramienta \textit{SQLite} en este componente y realizando las llamadas en los lugares adecuados. \textit{SQLite} trabaja con código \textit{SQL} \footnote{https://es.wikipedia.org/wiki/SQL} , un lenguaje sumamente extendido,  por lo que no fué complicado programar todas las consultas necesarias para el correcto funcionamiento de la plataforma, ya que la base de datos es muy pequeña (véase la Figura \ref{fig:db-scheme}) y las consultas que se requieren son sencillas.
 
@@ -827,12 +856,12 @@ Más tarde, se optó por cambiar el acceso a la base de datos e implementarlo co
 
 % SESIONES DE LOS USUARIOS
 
-\section{sesiones de los usuarios}
+\section{Sesiones de los usuarios}
 \label{sec:desarrollo-sesiones}
 
-Mantener las sesiones de los usuarios es necesarios para que no se pierda el flujo de trabajo en el caso de que, por ejemplo, se actualice la página o se cierre el navegador. En un principio, se crearon unas \textit{cookies} que se guardaban en la base de datos e identificaban al usuario. Estas \textit{cookies} se creaban de cero,  caducaban al cabo de un tiempo, y se utilizaban para saber qué usuario estaba conectado en el navegador, manteniendo su sesión. 
+Mantener las sesiones de los usuarios es necesario para que no se pierda el flujo de trabajo en el caso de que, por ejemplo, se actualice la página o se cierre el navegador. En un principio, se crearon unas \textit{cookies} que se guardaban en la base de datos e identificaban al usuario. Estas \textit{cookies} se creaban de cero,  caducaban al cabo de un tiempo, y se utilizaban para saber qué usuario estaba conectado en el navegador, manteniendo su sesión. 
 
-Como un usuario puede conectarse a la plataforma desde otros ordenadores o navegadores, con este sistema se perdían sus datos, pues lo único que lo identificaba era la propia \textit{cookie}. Al cambiar de sistema de seguridad, y utilizar una plataforma externa como \textit{Auth0}, la \textit{cookie} pasó a tener la utilidad que debe tener, es decir, mantener la sesión. Se eliminó la implementación de nuestra \textit{cookie} personalizada y pasó a utilizarse una creada por \textit{Jupyter} originalmente. Ésta se genera y guarda en la base de datos cuando un usuario se autentica. En el momento en el que el usuario se conecta desde otro navegador o ordenador, se actualiza la \textit{cookie} en la base de datos, haciendo que cualquier otra \textit{cookie} asociada a el usuario en otro navegador quede invalidada, haciendo que el usuario se tenga que volver a autenticar en ese navegador. Si la \textit{cookie} llega al punto de caducar, se exige la autenticación del usuario de nuevo.
+Como un usuario puede conectarse a la plataforma desde otros ordenadores o navegadores, con este sistema se perdían sus datos, pues lo único que lo identificaba era la propia \textit{cookie}. Al cambiar de sistema de seguridad, y utilizar una plataforma externa como \textit{Auth0}, la \textit{cookie} pasó a tener la utilidad que debe tener, es decir, mantener la sesión. Se eliminó la implementación de la \textit{cookie} personalizada y pasó a utilizarse una creada por \textit{Jupyter} originalmente. Ésta se genera y guarda en la base de datos cuando un usuario se autentica. En el momento en el que el usuario se conecta desde otro navegador o ordenador, se actualiza la \textit{cookie} en la base de datos, haciendo que cualquier otra \textit{cookie} asociada al usuario en otro navegador quede invalidada, haciendo que el usuario se tenga que volver a autenticar en ese navegador. Si la \textit{cookie} llega al punto de caducar, se exige la autenticación del usuario de nuevo.
 
 
 % COMPARTICIÓN DE LOS DOCUMENTOS
@@ -844,7 +873,7 @@ Respecto a la compartición de los documentos, se ha desarrollado el siguiente s
 
 Este submenú funciona de manera similar al explicado en la sección \ref{sec:desarrollo-roles}, insertando por medio de \textit{jquery} los diferentes usuarios dados de alta en la plataforma (tras la pertinente consulta a la base de datos) en el \textit{HTML} que se mostrará. Cuando se elige un usuario, se realiza una petición al servidor de la base de datos para generar una entrada con este usuario como Espectador en el \textit{notebook} en cuestión.
 
-A partir de este momento, se mostrará el \textit{notebook} el directorio del usuario. Ésto se consigue haciendo una consulta a la base de datos para que nos devuelva la lista de \textit{notebooks} en la que aparece el usuario. Esta lista, más tarde se comparará con el contenido real del directorio, y se listarán solo los \textit{notebooks} que aparecen en ambos lados.
+A partir de este momento, se mostrará en el \textit{notebook} el directorio del usuario. Ésto se consigue haciendo una consulta a la base de datos para que devuelva la lista de \textit{notebooks} en la que aparece el usuario. Esta lista, más tarde se comparará con el contenido real del directorio, y se listarán solo los \textit{notebooks} que aparecen en ambos lados.
 
 
 % AUTENTICACIÓN DE LOS USUARIOS
@@ -856,8 +885,8 @@ Tal y como se ha expuesto en la sección \ref{sec:desarrollo-sesiones}, la ident
 
 El nuevo sistema hace uso de la plataforma \textit{Auth0} para la autenticación de los usuarios. Para poner en marcha este sistema, se creó una cuenta en \textit{Auth0} y se registró la aplicación. De esta manera, se generan unas \textit{URLs} específicas de la aplicación a las que se tiene que redirigir al usuario para que realice su \textit{login}. También son generados el identificador de la aplicación así como una clave secreta. Por último hace falta especificar la dirección a la que se debe redirigir al usuario una vez termine su autenticación, llamada \textit{callback URL}. 
 
-Por otro lado, en el servidor de \textit{notebooks} se realiza un \textit{bypass}, que consiste en redirigir a todos los usuarios no identificados en la plataforma a la \textit{URL} de \textit{login} de \textit{Auth0}. En esta \textit{URL} va incluido como argumento el identificador de nuestra aplicación. Una vez el usuario es autenticado, se devuelve al usuario a la \textit{callback URL} especificada en los ajustes de la aplicación de \textit{Auth0}. Se recibe un código, que habrá que mandar haciendo una petición tipo \textit{POST} por \textit{HTTPS} a una \textit{URL} de las generadas previamente junto con el identificador de la aplicación y la clave secreta. De esta manera, \textit{Auth0} sabe que tenemos permisos para generar los \textit{JWT}, así que se generan y se devuelven.
-Podemos ver una vista detallada de esta interacción en el esquema de la Figura \ref{fig:auth0-scheme}, así como más información en la documentación de \textit{Auth0} \footnote{https://auth0.com/docs/application-auth/current/server-side-web}.
+Por otro lado, en el servidor de \textit{notebooks} se realiza un \textit{bypass}, que consiste en redirigir a todos los usuarios no identificados en la plataforma a la \textit{URL} de \textit{login} de \textit{Auth0}. En esta \textit{URL} va incluido como argumento el identificador de nuestra aplicación. Una vez el usuario es autenticado, se devuelve el usuario a la \textit{callback URL} especificada en los ajustes de la aplicación de \textit{Auth0}. Se recibe un código, que habrá que mandar haciendo una petición tipo \textit{POST} por \textit{HTTPS} a una \textit{URL} de las generadas previamente junto con el identificador de la aplicación y la clave secreta. De esta manera, \textit{Auth0} sabe que se tienen permisos para generar los \textit{JWT}, así que se generan y se devuelven.
+Se `puede ver una vista detallada de esta interacción en el esquema de la Figura \ref{fig:auth0-scheme}, así como más información en la documentación de \textit{Auth0} \footnote{https://auth0.com/docs/application-auth/current/server-side-web}.
 
 Con el \textit{JWT} correspondiente al \textit{login} del usuario en nuestro dominio, se procede a desencriptarlo, haciendo uso de la clave pública de nuestra aplicación, pues viene firmado con la privada para saber que es quién dice ser. Una vez desencriptado, se guardará la información relevante en la base de datos.
 
@@ -873,11 +902,11 @@ Con el \textit{JWT} correspondiente al \textit{login} del usuario en nuestro dom
 
 Para hacer uso de la aplicación y llevar a cabo su despliegue, se deben seguir una serie de pasos, ya que hay que realizar las conexiones de forma correcta, pues si no los componentes no se podrán comunicar entre ellos.
 
-En primer lugar, hay que crear una cuenta en la plataforma \textit{Auth0} y dar de alta la aplicación. De esta manera coseguiremos el conjunto de \textit{URLs} y claves necesarias para redirigir al usuario y que se pueda autenticar. También tendremos que configurar la \textit{URL} de \textit{callback} dentro de \textit{Auth0}, para que la redirección  del usuario de vuelta a nuestra plataforma sea exitosa. Esta \textit{URL} deberá pertenecer al dominio en el que se ejecuta la aplicación, y hay que tener en cuenta que si se cambia, se tendrá que añadir la nueva dirección a \textit{Auth0}.
+En primer lugar, hay que crear una cuenta en la plataforma \textit{Auth0} y dar de alta la aplicación. De esta manera se conseguirá el conjunto de \textit{URLs} y claves necesarias para redirigir al usuario y que se pueda autenticar. También se tendrá que configurar la \textit{URL} de \textit{callback} dentro de \textit{Auth0}, para que la redirección  del usuario de vuelta a nuestra plataforma sea exitosa. Esta \textit{URL} deberá pertenecer al dominio en el que se ejecuta la aplicación, y hay que tener en cuenta que si se cambia, se tendrá que añadir la nueva dirección a \textit{Auth0}.
 
 Una vez configurada toda la información en \textit{Auth0}, se utilizarán las \textit{URLs} y códigos generados en el servidor de \textit{notebooks}. Para ello, hay que modificar las llamadas que se hacen en la redirección del \textit{login}, introduciendo las claves y direcciones que nos proporciona \textit{Auth0}, como se ha explicado en la sección \ref{sec:desarrollo-auth}. Por otro lado, hay que ver dónde se va a lanzar el servidor de \textit{notebooks}, ya que se necesitará una dirección para que los usuarios se conecten a la plataforma.
 
-Por último, habrá que conectar el servidor de \textit{notebooks} y la base de datos. Simplemente se tiene que especificar la dirección en la que se lanza la base de datos en el servidor de \textit{notebooks}. La base de datos no inicia ninguna comunicación, por lo que no se ha de configurar nada por su parte. 
+Por último, habrá que conectar el servidor de \textit{notebooks} y la base de datos. Para ello se tiene que especificar la dirección en la que se lanza la base de datos en el servidor de \textit{notebooks}. La base de datos no inicia ninguna comunicación, por lo que no se ha de configurar nada por su parte. 
 
 Para poner en marcha el sistema, se ejecutarán el servidor de la base de datos y el servidor de \textit{notebooks}. El directorio que aparecerá como \textit{root} en el servidor de notebooks es aquel en el que se ejecuta la aplicación. Es necesario tener esto en cuenta, ya que si cae el servidor y se inicia desde otro punto los usuarios pueden confundirse o no saber llegar a sus archivos. \textit{Auth0} está siempre escuchando, por lo que no es necesario hacer nada explícitamente en cuanto a esta herramienta. 
 
@@ -897,7 +926,7 @@ Para poner en marcha el sistema, se ejecutarán el servidor de la base de datos 
 \section{Validación del sistema}
 \label{sec:validacion-sistema}
 
-A la hora de realizar las comprobaciones sobre el funcionamiento del sistema se ha seguido una metodología empírica. Tal y como comentamos en el capítulo \ref{ch:desarrollo-solucion}, el desarrollo de la solución se ha ido realizando por componentes o módulos dentro del sistema. Dentro de cada etapa del desarrollo de la aplicación, es decir, dentro de la impementación de cada módulo, se ha ido probando el funcionamiento del módulo en cuestión.
+A la hora de realizar las comprobaciones sobre el funcionamiento del sistema se ha seguido una metodología empírica. Tal y como se comentó en el capítulo \ref{ch:desarrollo-solucion}, el desarrollo de la solución se ha ido realizando por componentes o módulos dentro del sistema. Dentro de cada etapa del desarrollo de la aplicación, es decir, dentro de la impementación de cada módulo, se ha ido probando el funcionamiento del módulo en cuestión.
 
 Para las comprobaciones relativas a cada componente se plantean casos de prueba que cubran el mayor conjunto de casos reales posibles. Se realizan todos los \textit{tests} propuestos sobre el componente y se valora, según los resultados obtenidos, si el componente cumple con su funcionalidad de manera correcta. En el caso de no hacerlo, se revisa la implementación para detectar los errores y corregirlos.
 
@@ -924,11 +953,11 @@ Las pruebas se han realizado en un equipo con un procesador \textit{Intel Core i
   	\label{fig:loadplot}
 \end{figure}
 
-En la figura \ref{fig:loadplot} podemos ver los resultados obtenidos en esta prueba de carga. En el eje X se muestra el numero de celdas del notebook y en el Y los segundos que ha tardado en verse reflejado el cambio. Se han realizado tres mediciones para cada \textit{notebook}, reflejadas con las cruces azules, y se ha obtenido la media, que se muestra con la línea roja.
+En la figura \ref{fig:loadplot} se pueden ver los resultados obtenidos en esta prueba de carga. En el eje X se muestra el número de celdas del notebook y en el Y los segundos que ha tardado en verse reflejado el cambio. Se han realizado tres mediciones para cada \textit{notebook}, reflejadas con las cruces azules, y se ha obtenido la media, que se muestra con la línea roja.
 
-Se puede apreciar que mientras el \textit{notebook} tiene menos de cien celdas se mantiene un intervalo de carga razonable, muy cercano a los dos segundos programados. En cuanto se supera este valor, el tiempo de refresco crece exponencialmente, tardando al rededor de diez segundos con doscientas celdas, treinta con quinientas celdas y hasta ciento diez con mil celdas. Podemos determinar que es este punto en el que el sistema se satura, haciendo que trabajar con \textit{notebooks} de estas dimensiones no resulte una experiencia tan fluida.
+Se puede apreciar que mientras el \textit{notebook} tiene menos de cien celdas se mantiene un intervalo de carga razonable, muy cercano a los dos segundos programados. En cuanto se supera este valor, el tiempo de refresco crece exponencialmente, tardando alrededor de diez segundos con doscientas celdas, treinta con quinientas celdas y hasta ciento diez con mil celdas. Se puede determinar que es este punto en el que el sistema se satura, haciendo que trabajar con \textit{notebooks} de estas dimensiones no resulte una experiencia tan fluida.
 
-En la figura \ref{fig:load-compare} se realiza una comparativa de el teimpo de carga de los notebooks respecto al numero de casillas y el intervalo de refresco seleccionado. Cabe destacar que en esta figura, a diferencia de la \ref{fig:loadplot}, se utiliza una escala logarítmica en el eje \textit{Y}, lo que hace que las curvas no sean tan pronunciadas. Podemos ver como más o menos todos los valores se mantienen estables y cerca del intervalo seleccionado hasta las 50 celdas. En este punto empiezan a crecer, llegando todos a un tiempo de carga similar con 200 casillas. Después el intervalo de 0.5 segundos se dispara, mientras que los otros tres siguen un desarrollo similar entre ellos.
+En la figura \ref{fig:load-compare} se realiza una comparativa del tiempo de carga de los notebooks respecto al numero de casillas y el intervalo de refresco seleccionado. Cabe destacar que en esta figura, a diferencia de la \ref{fig:loadplot}, se utiliza una escala logarítmica en el eje \textit{Y}, lo que hace que las curvas no sean tan pronunciadas. Se puede ver como más o menos todos los valores se mantienen estables y cerca del intervalo seleccionado hasta las 50 celdas. En este punto empiezan a crecer, llegando todos a un tiempo de carga similar con 200 casillas. Después el intervalo de 0.5 segundos se dispara, mientras que los otros tres siguen un desarrollo similar entre ellos.
 
 Se ha elegido el intervalo de un segundo porque, aunque no sea práctica habitual el uso de notebooks con más de 100 celdas\footnote{https://blog.jupyter.org/we-analyzed-1-million-jupyter-notebooks-now-you-can-too-guest-post-8116a964b536}, en el caso de llegar a esa cantidad, un intervalo menor añadiría demasiado tiempo de espera. En el caso de no llegar a un numero tan elevado, tan solo estamos perdiendo al rededor de medio segundo en los refrescos, lo cual es un coste asumible.
 
@@ -1090,9 +1119,9 @@ A parte de los aspectos técnicos aprendidos, cabe destacar la importancia que t
 \label{ch:futuro}
 
 
-Tal y como se ha comentado en el capítulo \ref{ch:conclusiones}, existe un gran margen de mejora para nuestra aplicación. El objetivo principal, que era la creación de un entorno colaborativo se ha logrado, sin embargo, éste podría ser más completo. Se debe tener en cuenta que el Trabajo de Fin de Grado tiene una carga lectiva determinada, en concreto 12 créditos \textit{ECTS}, así como unos plazos establecidos, por lo que en algún momento se tiene que detener el desarrollo del proyecto. Éste ha sido el motivo principal por el que estos trabajos futuros que se expondrán a continuación no han podido ser incorporados en el trabajo realizado.
+Tal y como se ha comentado en el capítulo \ref{ch:conclusiones}, existe  margen de mejora para la aplicación desarrollada. El objetivo principal, que era la creación de un entorno colaborativo se ha logrado, sin embargo, éste podría ser más completo. Se debe tener en cuenta que el Trabajo de Fin de Grado tiene una carga lectiva determinada, en concreto 12 créditos \textit{ECTS}, así como unos plazos establecidos, por lo que en algún momento se tiene que detener el desarrollo del proyecto. Éste ha sido el motivo principal por el que estos trabajos futuros que se expondrán a continuación no han podido ser incorporados en el trabajo realizado.
 
-Los dos aspectos que disponen de un margen de mejora más amplio, desde mi punto de vista, son la sincronización de los \textit{notebooks} y el modelo de edición y ejecución de nuestra plataforma, como se comenta en las subsecciones \ref{subsec:objetivos-conc-sincro} y \ref{subsec:objetivos-conc-roles} respectivamente. Se han planteado y diseñado algunas mejoras para estos dos objetivos del proyecto, como vamos a ver en las secciones de este capítulo.
+Los tres aspectos que disponen de un margen de mejora más amplio, desde mi punto de vista, son la sincronización de los \textit{notebooks}, el modelo de edición y ejecución de nuestra plataforma y la gestión de los \textit{notebooks}, en concreto la manera de compartirlos, como se comenta en las subsecciones \ref{subsec:objetivos-conc-sincro}, \ref{subsec:objetivos-conc-roles} y  \ref{subsec:objetivos-conc-compartir} respectivamente. Se han planteado y diseñado algunas mejoras para estos dos objetivos del proyecto, como vamos a ver en las secciones de este capítulo.
 
 
 %MEJORAS EN LA SINCRONIZACIÓN DE NOTEBOOKS
@@ -1140,13 +1169,13 @@ El ciclo de ejecución de este nuevo modelo se puede apreciar en la Figura \ref{
 
 El modelo de edición y ejecución de nuestra aplicación ha sido comentado en la subsección \ref{subsec:identificacin-permisos} y la sección \ref{sec:desarrollo-roles}. Se trata de un modelo con tan solo un editor concurrente, en el que ese permiso se va pasando por los diferentes usuarios con acceso al notebook que se está editando para conseguir la colaboración. El modelo de ejecución se mantenía inalterado con respecto al \textit{Jupyter} original, pues al tener solamente un editor en cada momento, todas las ejecuciones de celdas van a ser secuenciales, es decir, independientemente del usuario que esté editando, en ese momento solo ese usuario podrá ejecutar las celdas del \textit{notebook}.
 
-El modelo de ejecución de \textit{Jupyter} funciona de una forma peculiar, como se explicó en la subsección \ref{subsec:modelo-ejec}. Las celdasse ejecutan en base al contexto guardado en el \textit{Kernel} en el momento en el que se envian. Este contexto del \textit{Kernel} está formado por el estado asignado a las variables en las ejecuciones anteriores. 
+El modelo de ejecución de \textit{Jupyter} funciona de una forma peculiar, como se explicó en la subsección \ref{subsec:modelo-ejec}. Las celdas se ejecutan en base al contexto guardado en el \textit{Kernel} en el momento en el que se envian. Este contexto del \textit{Kernel} está formado por el estado asignado a las variables en las ejecuciones anteriores. 
 
-Al solo poder ser editados los documentos por un usuario en el \textit{Jupyter} original, este modelo tiene sentido, porque es el usuario el que decide en que orden ejecuta las celdas, y, por tanto, el  responsable de llevar el control de el contexto en cada punto. En el momento en el que se pretende que más de un usuario pueda realizar ejecuciones en un mismo documento, el modelo de ejecución original de \textit{Jupyter} empieza a no cumplir su funcióm de una forma efectiva, pues las ejecuciones de un usuario pueden romper el contexto que otro esperaba en cierto punto del \textit{notebook}.
+Al solo poder ser editados los documentos por un usuario en el \textit{Jupyter} original, este modelo tiene sentido, porque es el usuario el que decide en que orden ejecuta las celdas, y, por tanto, el  responsable de llevar el control de el contexto en cada punto. En el momento en el que se pretende que más de un usuario pueda realizar ejecuciones en un mismo documento, el modelo de ejecución original de \textit{Jupyter} empieza a no cumplir su función de una forma efectiva, pues las ejecuciones de un usuario pueden romper el contexto que otro esperaba en cierto punto del \textit{notebook}.
 
-Imaginemos que el usuario \textit{A} está editando la celda 3 del documento, y, a su vez, el usuario \textit{B} está modificando la celda 5. El usuario \textit{B} había preparado una variable llamada \textit{sol} en la celda 4, para su uso posterior. Si el usuario \textit{A} utiliza esa estiqueta para cualquier otra variable y ejecuta, cuando \textit{B} intente ejecutar la celda 5, su resultado no será el esperado, pues el valor de esa variable habrá cambiado en el contexto del \textit{kernel}, y se aplicará el último valor guardado, devolviendo un resultado diferente al esperado por \textit{B}.
+Imaginemos que el usuario \textit{A} está editando la celda 3 del documento, y, a su vez, el usuario \textit{B} está modificando la celda 5. El usuario \textit{B} había preparado una variable llamada \textit{sol} en la celda 4, para su uso posterior. Si el usuario \textit{A} utiliza esa etiqueta para cualquier otra variable y ejecuta, cuando \textit{B} intente ejecutar la celda 5, su resultado no será el esperado, pues el valor de esa variable habrá cambiado en el contexto del \textit{kernel}, y se aplicará el último valor guardado, devolviendo un resultado diferente al esperado por \textit{B}.
 
-Esta situación es dificil de resolver, porque se necesita que cada usuario pueda realizar las ejecuciones dentro del contexto que necesite, y, a su vez, que los espectadores puedan ver el progreso del notebook. Si se continua funcionando como hasta ahora, se podría hacer que cada usuario tuviera una instancia del notebook diferente, y asignar un \textit{kernel} a cada uno de ellos. De esta manera, cada usuario contaría con su contexto independiente, pero ¿cómo se mustra la información en tiempo real a los espectadores? ¿Y cómo se resuelven los conflictos que se puedan generar?, por ejemplo en el caso de que diferentes usuarios hayan modificado la misma celda. Estas preguntas no tienen una respuesta sencilla, por lo que se plantea la colaboración de dos o más usuarios simultáneos haciendo uso de un modelo diferente, en el cuál a cada usuario se le deja modificar únicamente una celda en cada momento.
+Esta situación es dificil de resolver, porque se necesita que cada usuario pueda realizar las ejecuciones dentro del contexto que necesite, y, a su vez, que los espectadores puedan ver el progreso del \textit{notebook}. Si se continua funcionando como hasta ahora, se podría hacer que cada usuario tuviera una instancia del \textit{notebook} diferente, y asignar un \textit{kernel} a cada uno de ellos. De esta manera, cada usuario contaría con su contexto independiente, pero ¿cómo se mustra la información en tiempo real a los espectadores? ¿Y cómo se resuelven los conflictos que se puedan generar?, por ejemplo en el caso de que diferentes usuarios hayan modificado la misma celda. Estas preguntas no tienen una respuesta sencilla, por lo que se plantea la colaboración de dos o más usuarios simultáneos haciendo uso de un modelo diferente, en el cuál a cada usuario se le deja modificar únicamente una celda en cada momento.
 
 De esta manera, el usuario con permisos de administración podría dar los permisos a celdas en concreto, haciendo que cada usuario solo pueda modificar una celda a la vez. Para que no haya conflictos en la ejecución, se mantendrá una versión \textit{master} del \textit{notebook}. Esta versión será la guardada en disco, y la correcta en cada momento dado. A la hora de conocer el contexto con el que está trabajando, el usuario siempre tendrá como referencia esta versión \textit{master}. Para que se produzcan modificaciones en ella, el usuario con permisos de administración en el \textit{notebook} tiene que aceptar los cambios realizados por un editor en la celda editada. Cuando se acepten, se actualizará la versión \textit{master}, y, de esta manera, se empujarán los cambios a todos los usuarios que estén editando, para que vean que el contexto ha cambiado y que les puede afectar.
 
@@ -1157,15 +1186,28 @@ De esta manera, el usuario con permisos de administración podría dar los permi
   	\label{fig:new-exec}
 \end{figure}
 
-En la Figura \ref{fig:new-exec} se puede ver un esquema de este nuevo modelo de edición y ejecución de nuestra plataforma. Podemos apreciar la versión máster del notebook así como los diferentes colaboradores. Tambien podemos ver que aparece un elemento llamado \textit{connection bridge}, que será el encargado de interceptar los mensajes entre los notebooks y el \textit{kernel} y añadir los métodos \textit{Dill} \footnote{https://pypi.org/project/dill/} , que gestionarán los contextos, realizando su guardad y carga. El funcionamiento del sistema es el siguiente:
+En la Figura \ref{fig:new-exec} se puede ver un esquema de este nuevo modelo de edición y ejecución de nuestra plataforma. Podemos apreciar la versión máster del notebook así como los diferentes colaboradores. Tambien podemos ver que aparece un elemento llamado \textit{kernel proxy}, que será el encargado de interceptar los mensajes entre los notebooks y el \textit{kernel} y añadir métodos de la herramienta \textit{Dill} \footnote{https://pypi.org/project/dill/} (Módulo de \textit{Python} que extiende las funcionalidades de \textit{Pickle}\footnote{https://docs.python.org/3/library/pickle.html}), que gestionará los contextos. Se hará uso de dos métodos, uno de carga y otro de guardado. El método de guardado, al llamarse en un punto del código, guarda el contexto del momento en que fué llamado en disco. Por otro lado, el de cargado, carga el método dado un archivo en disco y sobreescribe el contexto existente en base a este archivo. El \textit{kernel proxy} insertará estos métodos en lugares concretos del código mandado por los diferentes colaboradores para que éste sea ejecutado en base al contexto deseado. El funcionamiento del sistema es el siguiente:
 
-En primer lugar se tiene que realizar una ejecución del \textit{notebook master} para generar los contextos. En el caso de que el \textit{notebook} sea nuevo y esté vacío no es necesario, porque no habrá contexto disponible. Este modelo de ejecución va a seguir la lógica de que el \textit{notebook} es lineal, es decir que las celdas inferiores siempre van a ejecutarse más tarde que la superiores. Al ejecutar el \textit{notebook master} completo, se mandan las celdas a ejecución una a una y en orden. Cada vez que el connection bridge reciba el código de una celda, le insertará un método \textit{dill} de guardado y lo mandará a ejecutar. De esta manera, se almacenará el contexto de cada celda en la array de contextos, que estará guardada en disco. 
+En primer lugar se tiene que realizar una ejecución del \textit{notebook master} para generar los contextos. En el caso de que el \textit{notebook} sea nuevo y esté vacío no es necesario, porque no habrá contexto disponible. Este modelo de ejecución va a seguir la lógica de que el \textit{notebook} es lineal, es decir que las celdas inferiores siempre van a ejecutarse más tarde que la superiores. Al ejecutar el \textit{notebook master} completo, se mandan las celdas a ejecución una a una y en orden. Cada vez que el \textit{kernel proxy} reciba el código de una celda, le insertará un método \textit{Dill} de guardado al final y lo mandará a ejecutar. De esta manera, se almacenará el contexto de cada celda en la \textit{array} de contextos, que estará guardada en disco. 
 
-Después, el administrador compartirá una celda, nombrando a un usuario editor. Cuando este usuario quiera realizar una ejecución de la celda, se mandará el código a el \textit{connection bridge}, y éste añadirá el método de cargado \textit{dill} de la celda anterior a la que se va a mandar a ejecutar. De esta manera, el \textit{kernel} cargará el contexto correspondiente y la celda se ejecutará de forma consistente. El editor puede hacer pruebas, porque el contexto siempre va a ser el de la celda anterior en sus ejecuciones.
+Después, el administrador compartirá una celda, nombrando a un usuario editor. Cuando este usuario quiera realizar una ejecución de la celda, se mandará el código al \textit{kernel proxy}, y éste añadirá el método de cargado \textit{dill} al principio, cogiendo el archivo de contexto de la celda anterior a la que se va a mandar a ejecutar. De esta manera, el \textit{kernel} cargará el contexto correspondiente y la celda se ejecutará de forma consistente. El editor puede hacer pruebas, porque el contexto siempre va a ser el de la celda anterior en sus ejecuciones.
 
-Por último, cuando un editor termine con las modificaciones en su celda, el administrador del \textit{notebook} tiene que decidir si mantiene los cambios o los descarta. En el caso de descartar los cambios propuestos, no se tiene que realizar ninguna ejecución, porque los contextos se mantienen. Sin embargo, en el caso de aceptar estas modificaciones, se tienen que recalcular los contextos de las celdas posteriores, porque dependen de éste. En el momento en el que se acepten los cambios, se ejecutará desde la celda cambiada hasta el final del documento.  En la primera celda que se ejecute, el \textit{connection bridge} insertará el método \textit{dill} de carga al principio y el de guardado al final, para ejecutar las celdas en base al contexto correcto. El resto de celdas se ejecutarán con el método \textit{dill} de guardado al final. Para finalizar, se actualizarán los notebooks de los editores con un mensaje, avisando de que la versión \textit{master} ha cambiado, para que lo tengan en cuenta.
+Por último, cuando un editor termine con las modificaciones en su celda, el administrador del \textit{notebook} tiene que decidir si mantiene los cambios o los descarta. En el caso de descartar los cambios propuestos, no se tiene que realizar ninguna ejecución, porque los contextos se mantienen. Sin embargo, en el caso de aceptar estas modificaciones, se tienen que recalcular los contextos de las celdas posteriores, porque dependen de éste. En el momento en el que se acepten los cambios, se ejecutará desde la celda cambiada hasta el final del documento.  En la primera celda que se ejecute, el \textit{kernel proxy} insertará el método \textit{dill} de carga al principio, cogiendo el archivo de contexto de la celda anterior, y el de guardado al final, para ejecutar las celdas en base al contexto correcto. El resto de celdas se ejecutarán con el método \textit{dill} de guardado al final. Para finalizar, se actualizarán los notebooks de los editores con un mensaje, avisando de que la versión \textit{master} ha cambiado, para que lo tengan en cuenta.
 
 Este sistema funciona con un solo \textit{kernel}, por lo que el consumo de recursos es bajo. Sin embargo, en el caso de haber muchos editores y querer ejecutar sus celdas a la vez, algunos usuarios puede que tengan que esperar. Esto se debe a que el \textit{kernel} solo puede ejecutar una celda a la vez, por lo que el \textit{connection bridge} tiene que implementar una cola, mandando una celda a ejecutar cuando el \textit{kernel} le haya devuelto un resultado y esté disponible. Por otro lado, se podría plantear un modelo con un \textit{kernel} por editor, cargando su contexto al principio. De esta manera el \textit{connection bridge} serviría para dirigir cada celda a su \textit{kernel} asociado. Se debe valorar si interesa un sistema con poco tiempo de espera y poco consumo de recursos o si se prefiere un tiempo de respuesta menor con un coste computacional más elevado. De esto dependerá la topología elegida para el sistema mejorado.
+
+%MEJORAS EN LA GESTIÓN DE NOTEBOOKS
+
+\section{Mejoras en la gestión de \textit{notebooks}}
+\label{sec:mejoras-gestión}
+
+La gestión de notebooks mantiene todas las opciones de las que dispone la verión original de \textit{Jupyter}. Como hemos comentado en la subsección \ref{subsec:objetivos-conc-compartir}, se ha añadido la compartición de los \textit{notebooks} a estas opciones, ya que es necesaria dentro del entorno colaborativo. 
+
+Esta opción para la compartición se ha llevado a cabo de manera funcional, dándole al administrador del \textit{notebook} en cuestión permiso para compartir éste con los diferentes usuarios registrados en la plataforma. La manera de lograrlo es seleccionando su identificador público en un submenú, como se puede apreciar en la figura \ref{fig:detalle-nb}. Este método plantea algunos problemas en el momento en el que hay muchos usuarios dados de alta en la plataforma, ya que puede ser tedioso encontrar al usuario concreto que deseas añadir. Una solución a este problema sería dar la posibilidad al administrador de buscar en la lista de usuarios, o bien poder añadir a un usuario insertando su identificador directamente. 
+
+Para conseguir una compartición más completa, se debería poder añadir a usuarios a los \textit{notebooks} por correo electrónico o haciendo uso de \textit{links}. ésto permitiria compartir los documentos con gente todavía no registrada en el sistema. Habría que tener en cuenta la seguridad de estos métodos, pues, aunque los usuarios añadidos se dieran de alta en la plataforma, cosa que tendrían que hacer, habría que verificar que son quién dicen ser. De no poder realizar la comprobaciones de identidad necesarias, podrían llegar usuarios no deseados a visualizar los documentos, lo que supondría una gran vulnerabilidad. Para poder introducir estos métodos de compartición en la aplicación se debería realizar un estudio y escoger una solución segura.
+
+La inclusión de todas estas mejoras mencionadas en el proyecto llevado a cabo resultaría en una solución más completa. Sin embargo, el trabajo se ha finalizado y se ha obtenido una herramienta que cumple con todos los objetivos planteados. A lo largo del proyecto se iba pensando en todo momento en como mejorar el sistema, es por eso que estas propuestas de trabajo futuro están tan detalladas, y sirven como un punto de partida muy acotado para la continuación del proyecto.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                GLOSARIO                                     %
